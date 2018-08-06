@@ -1,13 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, Button} from 'react-native';
+import { Navigation } from 'react-native-navigation';
 const FBSDK = require('react-native-fbsdk');
 const {
   LoginButton,
@@ -22,12 +15,12 @@ const instructions = Platform.select({
 });
 
 type Props = {};
-export default class App extends Component<Props> {
+export default class WelcomeScreen extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to Ship!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
+        <Text style={styles.instructions}>To get started, edit WelcomeScreen.js</Text>
         <Text style={styles.instructions}>{instructions}</Text>
         <LoginButton
           publishPermissions={["publish_actions"]}
@@ -47,8 +40,17 @@ export default class App extends Component<Props> {
             }
           }
           onLogoutFinished={() => alert("logout.")} />
+          <Button title='GoTo Page 2' onPress={() => this.onClickPush()} />
       </View>
     );
+  }
+
+  onClickPush = async () => {
+    await Navigation.push(this.props.componentId, {
+      component: {
+        name: 'navigation.app.SecondScreen',
+      }
+    });
   }
 }
 
