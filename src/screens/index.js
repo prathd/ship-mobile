@@ -3,6 +3,12 @@ import WelcomeScreen from './WelcomeScreen';
 import SecondScreen from './SecondScreen';
 
 export const registerScreens = () => {
-  Navigation.registerComponent(`navigation.app.WelcomeScreen`, () => WelcomeScreen);
-  Navigation.registerComponent(`navigation.app.SecondScreen`, () => SecondScreen);
-}
+  Navigation.registerComponent(
+    `navigation.app.WelcomeScreen`,
+    () => WelcomeScreen,
+  );
+  Navigation.registerComponent(
+    `navigation.app.SecondScreen`,
+    () => SecondScreen,
+  );
+};

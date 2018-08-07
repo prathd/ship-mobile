@@ -13,10 +13,10 @@ export default function start() {
               component: {
                 name: 'navigation.app.WelcomeScreen',
               },
-            }
+            },
           ],
-        }
-      }
+        },
+      },
     });
   });
 }

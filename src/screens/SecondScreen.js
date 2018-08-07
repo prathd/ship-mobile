@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
 export default class SecondScreen extends Component {
@@ -7,14 +7,14 @@ export default class SecondScreen extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>This is Page 2!</Text>
-        <Button title='GoTo Page 1' onPress={() => this.onClickPop()} />
+        <Button title="GoTo Page 1" onPress={() => this.onClickPop()} />
       </View>
     );
   }
 
   onClickPop = async () => {
     await Navigation.pop(this.props.componentId);
-  }
+  };
 }
 
 const styles = StyleSheet.create({
