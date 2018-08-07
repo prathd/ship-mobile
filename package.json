@@ -3,13 +3,16 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
+    "clean": "scripts/clear-cache.sh",
     "eslint": "eslint src/**",
     "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "eslint:fix": "eslint --fix src/** && npm run prettier",
+    "info": "node node_modules/react-native/local-cli/cli.js info",
+    "ios": "react-native run-ios",
     "prettier": "prettier --write 'src/**/*.js'",
-    "run-android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "dependencies": {
     "react": "16.4.1",
