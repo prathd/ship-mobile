@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "prettier": "prettier 'src/**/*.js'",
     "run-android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest"
   },
   "dependencies": {
@@ -17,6 +18,7 @@
     "babel-jest": "23.4.2",
     "babel-preset-react-native": "^5",
     "jest": "23.4.2",
+    "prettier": "^1.14.0",
     "react-test-renderer": "16.4.1"
   },
   "jest": {
