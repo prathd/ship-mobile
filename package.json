@@ -10,6 +10,7 @@
     "eslint:fix": "eslint --fix src/** && npm run prettier",
     "info": "node node_modules/react-native/local-cli/cli.js info",
     "ios": "react-native run-ios --simulator 'iPhone X'",
+    "precommit": "lint-staged",
     "prettier": "prettier --write 'src/**/*.js'",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest --verbose"
@@ -32,7 +33,9 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.10.0",
     "eslint-plugin-react-native": "^3.2.1",
+    "husky": "^0.14.3",
     "jest": "23.4.2",
+    "lint-staged": "^7.2.0",
     "prettier": "^1.14.0",
     "react-test-renderer": "16.4.1"
   },
