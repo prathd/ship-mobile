@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
-export default class SecondScreen extends Component {
+export class Second extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -30,3 +31,12 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = {};
+
+export const SecondScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Second);

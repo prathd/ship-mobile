@@ -1,9 +1,9 @@
-import { Navigation } from 'react-native-navigation';
-import { registerScreens } from './screens';
-import { Platform } from 'react-native';
+// @flow strict
 
-export default function start() {
-  registerScreens();
+import { Navigation } from 'react-native-navigation';
+import { SCREENS } from './screens';
+
+export const registerListeners = () => {
   Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setRoot({
       root: {
@@ -11,7 +11,7 @@ export default function start() {
           children: [
             {
               component: {
-                name: 'navigation.app.WelcomeScreen',
+                name: SCREENS.HOME,
               },
             },
           ],
@@ -19,4 +19,4 @@ export default function start() {
       },
     });
   });
-}
+};

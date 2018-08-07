@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Platform, StyleSheet, Text, View, Button } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 const FBSDK = require('react-native-fbsdk');
@@ -12,7 +13,7 @@ const instructions = Platform.select({
 });
 
 type Props = {};
-export default class WelcomeScreen extends Component<Props> {
+export class Welcome extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
@@ -68,3 +69,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = {};
+
+export const WelcomeScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Welcome);
