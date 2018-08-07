@@ -15,6 +15,11 @@ export const registerListeners = () => {
               },
             },
           ],
+          options: {
+            topBar: {
+              visible: false,
+            },
+          },
         },
       },
     });
