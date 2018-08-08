@@ -5049,6 +5049,12 @@ react-native-fbsdk@^0.7.0:
     pump "^1.0.2"
     xcode "^0.9.3"
 
+react-native-linear-gradient@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.4.0.tgz#51d8ea12bb72a59bede9edc87b694b16b64cf435"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-navigation@2.0.2452:
   version "2.0.2452"
   resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-2.0.2452.tgz#67a4b97c9a5b038f926411b95e8224afe57f6d2f"

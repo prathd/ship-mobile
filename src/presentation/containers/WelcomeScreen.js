@@ -1,20 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { Dimensions, Text, View, Button } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import Swiper from 'react-native-swiper';
+import LinearGradient from 'react-native-linear-gradient';
+
 import { styles } from '../styles/WelcomeScreen.styles';
 
 type Props = {};
 export class Welcome extends Component<Props> {
   render() {
+    const gradientOptions = {
+      start:
+        Dimensions.get('window').height < 700
+          ? { x: 0.25, y: 0 }
+          : Dimensions.get('window').height < 800
+            ? { x: 0, y: 0 }
+            : { x: 0.05, y: 0 },
+      end:
+        Dimensions.get('window').height < 700
+          ? { x: 0.75, y: 1 }
+          : Dimensions.get('window').height < 800
+            ? { x: 1, y: 1 }
+            : { x: 0.5, y: 1 },
+      locations: [0.15, 1],
+      colors: ['#F55D84', '#7659DD'],
+    };
+
+    console.log();
     return (
       <View style={styles.container}>
-        <Swiper style={styles.wrapper} autoplay loop>
-          <View style={styles.slide1}>
+        <Swiper containerStyle={styles.wrapper} loop>
+          <LinearGradient {...gradientOptions} style={styles.slide1}>
             <Text style={styles.text}>Welcome to Ship!</Text>
-          </View>
+          </LinearGradient>
           <View style={styles.slide2}>
             <Text style={styles.text}>Page 2</Text>
           </View>
@@ -24,15 +44,7 @@ export class Welcome extends Component<Props> {
         </Swiper>
         <View style={styles.overlay}>
           <LoginButton
-            publishPermissions={[
-              'default',
-              'email',
-              'user_birthday',
-              'user_gender',
-              'user_hometown',
-              'user_likes',
-              'user_photos',
-            ]}
+            publishPermissions={['publish_actions']}
             onLoginFinished={(error, result) => {
               if (error) {
                 alert('Login has ERROR: ' + result.error);

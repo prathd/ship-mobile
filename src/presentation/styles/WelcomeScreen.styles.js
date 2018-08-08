@@ -1,5 +1,6 @@
 // @flow strict
 
+import { Platform, Dimensions } from 'react-native';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -8,7 +9,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  wrapper: {},
+  wrapper: {
+    width: Platform.OS === 'ios' ? '100%' : Dimensions.get('window').width,
+  },
   slide1: {
     flex: 1,
     justifyContent: 'center',
