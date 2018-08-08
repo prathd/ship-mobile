@@ -5,12 +5,16 @@ import { Provider } from 'react-redux';
 
 import { getStore } from '../redux';
 import { decorateWithProvider } from './reduxIntegration';
-import { WelcomeScreen } from '../containers/WelcomeScreen';
-import { SecondScreen } from '../containers/SecondScreen';
+import { HomeScreen } from '../containers/HomeScreen';
+import { PhoneScreen } from '../containers/register/PhoneScreen';
+
+const REGISTER_SCREENS = {
+  PHONE: `navigation.app.register.PhoneScreen`,
+};
 
 export const SCREENS = {
-  HOME: `navigation.app.WelcomeScreen`,
-  SECOND: `navigation.app.SecondScreen`,
+  HOME: `navigation.app.HomeScreen`,
+  REGISTER: REGISTER_SCREENS,
 };
 
 export const registerScreens = () => {
@@ -18,11 +22,11 @@ export const registerScreens = () => {
 
   Navigation.registerComponent(
     SCREENS.HOME,
-    decorateWithProvider(WelcomeScreen, store, Provider),
+    decorateWithProvider(HomeScreen, store, Provider),
   );
 
   Navigation.registerComponent(
-    SCREENS.SECOND,
-    decorateWithProvider(SecondScreen, store, Provider),
+    SCREENS.REGISTER.PHONE,
+    decorateWithProvider(PhoneScreen, store, Provider),
   );
 };

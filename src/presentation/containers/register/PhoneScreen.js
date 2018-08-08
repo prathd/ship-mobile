@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
-export class Second extends Component {
+import { styles } from '../../styles/PhoneScreen.styles';
+
+export class Phone extends Component {
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Text>This is Page 2!</Text>
         <Button title="Back" onPress={() => this.onClickPop()} />
       </View>
@@ -22,7 +24,7 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = {};
 
-export const SecondScreen = connect(
+export const PhoneScreen = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Second);
+)(Phone);

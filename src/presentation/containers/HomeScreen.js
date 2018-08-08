@@ -6,10 +6,11 @@ import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import Swiper from 'react-native-swiper';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { styles } from '../styles/WelcomeScreen.styles';
+import { SCREENS } from '../navigation/screens';
+import { styles } from '../styles/HomeScreen.styles';
 
 type Props = {};
-export class Welcome extends Component<Props> {
+export class Home extends Component<Props> {
   render() {
     const gradientOptions = {
       start:
@@ -67,7 +68,7 @@ export class Welcome extends Component<Props> {
   onClickPush = async () => {
     await Navigation.push(this.props.componentId, {
       component: {
-        name: 'navigation.app.SecondScreen',
+        name: SCREENS.REGISTER.PHONE,
         options: {
           topBar: {
             visible: false,
@@ -90,7 +91,7 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = {};
 
-export const WelcomeScreen = connect(
+export const HomeScreen = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Welcome);
+)(Home);
