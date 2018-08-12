@@ -75,22 +75,64 @@ export class Home extends Component<Props> {
     );
   }
 
-  onFBLogin = (error, result) => {
+  onFBLogin = async (error, result) => {
     if (error) {
       alert('Login has ERROR: ' + result.error);
     } else if (result.isCancelled) {
       alert('Login was cancelled.');
     } else {
-      FBSDK.AccessToken.getCurrentAccessToken().then(data => {
-        alert(data.accessToken.toString());
-      });
+      const data = await FBSDK.AccessToken.getCurrentAccessToken();
+      const response = await fetch(
+        'http://localhost:3000/api/v1/auth/login/fbat',
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            token: data.accessToken.toString(),
+          }),
+        },
+      );
+      const responseJson = await response.json();
+
+      if (responseJson.code === 103) {
+        this.pushPhoneScreen();
+      } else if (responseJson.code === 102) {
+        // TODO preserve responseJson.data.user object here
+        this.pushDashboardScreen();
+      } else {
+        alert('FB Login unsuccessful.');
+      }
     }
   };
 
-  onClickPush = async () => {
+  pushPhoneScreen = async () => {
     await Navigation.push(this.props.componentId, {
       component: {
         name: SCREENS.REGISTER.PHONE,
+        options: {
+          topBar: {
+            visible: false,
+          },
+          animations: {
+            push: {
+              enable: false,
+            },
+            pop: {
+              enable: false,
+            },
+          },
+        },
+      },
+    });
+  };
+
+  pushDashboardScreen = async () => {
+    await Navigation.push(this.props.componentId, {
+      component: {
+        name: SCREENS.DASHBOARD.HOME,
         options: {
           topBar: {
             visible: false,

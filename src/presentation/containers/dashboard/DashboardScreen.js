@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 import { Text, View, Button } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
-import { SCREENS } from '../../navigation/screens';
-import { styles } from '../../styles/PhoneConfirm.styles';
+import { styles } from '../../styles/DashboardScreen.styles';
 
-export class Phone extends Component {
+export class Dashboard extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Confirm Phone #</Text>
+        <Text>Dashboard</Text>
         <Button title="Back" onPress={() => this.onClickPop()} />
       </View>
     );
@@ -25,7 +24,7 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = {};
 
-export const PhoneConfirm = connect(
+export const DashboardScreen = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Phone);
+)(Dashboard);
