@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Dimensions, Text, View, Button } from 'react-native';
+import { Dimensions, Text, View, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { LoginButton, AccessToken } from 'react-native-fbsdk';
+import FBSDK from 'react-native-fbsdk';
 import Swiper from 'react-native-swiper';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -28,11 +28,28 @@ export class Home extends Component<Props> {
       locations: [0.15, 1],
       colors: ['#F55D84', '#7659DD'],
     };
+    const fbPermissions = [
+      'public_profile',
+      'email',
+      'user_birthday',
+      'user_photos',
+      'user_videos',
+      'user_friends',
+      'user_gender',
+      'user_hometown',
+      'user_likes',
+      'user_link',
+      'user_location',
+    ];
 
-    console.log();
     return (
       <View style={styles.container}>
-        <Swiper containerStyle={styles.wrapper} loop>
+        <Swiper
+          containerStyle={styles.wrapper}
+          autoplay
+          autoplayTimeout={5}
+          loop
+        >
           <LinearGradient {...gradientOptions} style={styles.slide1}>
             <Text style={styles.text}>Welcome to Ship!</Text>
           </LinearGradient>
@@ -44,26 +61,31 @@ export class Home extends Component<Props> {
           </View>
         </Swiper>
         <View style={styles.overlay}>
-          <LoginButton
-            publishPermissions={['publish_actions']}
-            onLoginFinished={(error, result) => {
-              if (error) {
-                alert('Login has ERROR: ' + result.error);
-              } else if (result.isCancelled) {
-                alert('Login was cancelled.');
-              } else {
-                AccessToken.getCurrentAccessToken().then(data => {
-                  alert(data.accessToken.toString());
-                });
-              }
-            }}
-            onLogoutFinished={() => alert('logout.')}
+          <FBSDK.LoginButton
+            readPermissions={fbPermissions}
+            onLoginFinished={this.onFBLogin}
           />
-          <Button title="Use Phone Number" onPress={() => this.onClickPush()} />
+          <TouchableOpacity onPress={this.onClickPush}>
+            <View style={styles.phoneView}>
+              <Text style={styles.phoneText}>USE PHONE NUMBER</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
   }
+
+  onFBLogin = (error, result) => {
+    if (error) {
+      alert('Login has ERROR: ' + result.error);
+    } else if (result.isCancelled) {
+      alert('Login was cancelled.');
+    } else {
+      FBSDK.AccessToken.getCurrentAccessToken().then(data => {
+        alert(data.accessToken.toString());
+      });
+    }
+  };
 
   onClickPush = async () => {
     await Navigation.push(this.props.componentId, {

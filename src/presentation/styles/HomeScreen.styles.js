@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   wrapper: {
-    width: Platform.OS === 'ios' ? '100%' : Dimensions.get('window').width,
+    width: Dimensions.get('window').width,
   },
   slide1: {
     flex: 1,
@@ -38,5 +38,18 @@ export const styles = StyleSheet.create({
   overlay: {
     position: 'absolute',
     bottom: 75,
+  },
+  phoneView: {
+    borderStyle: 'solid',
+    borderColor: '#FFFFFF',
+    borderRadius: 25,
+    borderWidth: 3,
+    padding: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+  phoneText: {
+    color: '#FFFFFF',
   },
 });
