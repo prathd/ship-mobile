@@ -27,7 +27,7 @@ export const SCREENS = {
 };
 
 export const registerScreens = () => {
-  const store = getStore();
+  const { store } = getStore();
 
   Navigation.registerComponent(
     SCREENS.HOME,

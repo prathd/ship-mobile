@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Dimensions, Text, View, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import FBSDK from 'react-native-fbsdk';
@@ -7,6 +8,7 @@ import Swiper from 'react-native-swiper';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { SCREENS } from '../navigation/screens';
+import { storeFBData } from '../redux/actions';
 import { styles } from '../styles/HomeScreen.styles';
 
 type Props = {};
@@ -65,7 +67,7 @@ export class Home extends Component<Props> {
             readPermissions={fbPermissions}
             onLoginFinished={this.onFBLogin}
           />
-          <TouchableOpacity onPress={this.onClickPush}>
+          <TouchableOpacity onPress={this.pushPhoneScreen}>
             <View style={styles.phoneView}>
               <Text style={styles.phoneText}>USE PHONE NUMBER</Text>
             </View>
@@ -90,20 +92,24 @@ export class Home extends Component<Props> {
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            token: data.accessToken.toString(),
-          }),
+          body: JSON.stringify({ data }),
         },
       );
       const responseJson = await response.json();
 
+      this.props.storeFBData({
+        data: {
+          name: responseJson.data.name,
+          birthday: responseJson.data.birthday,
+        },
+      });
+
       if (responseJson.code === 103) {
         this.pushPhoneScreen();
       } else if (responseJson.code === 102) {
-        // TODO preserve responseJson.data.user object here
         this.pushDashboardScreen();
       } else {
-        alert('FB Login unsuccessful.');
+        alert('Login with Facebook unsuccessful.');
       }
     }
   };
@@ -153,7 +159,9 @@ export class Home extends Component<Props> {
 
 const mapStateToProps = state => ({});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ storeFBData }, dispatch);
+};
 
 export const HomeScreen = connect(
   mapStateToProps,

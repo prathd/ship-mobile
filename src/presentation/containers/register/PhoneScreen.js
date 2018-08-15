@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { storeFBData } from '../../redux/actions';
 import { Text, View, Button, TextInput } from 'react-native';
 import { Navigation } from 'react-native-navigation';
+import PhoneInput from 'react-native-phone-input';
 
 import { SCREENS } from '../../navigation/screens';
 import { styles } from '../../styles/PhoneScreen.styles';
@@ -11,18 +14,27 @@ export class Phone extends Component {
     return (
       <View style={styles.container}>
         <Text>This is Page 2!</Text>
-        <TextInput keyboardType={'phone-pad'} />
-        <Button title="Back" onPress={() => this.onClickPop()} />
-        <Button title="Next" onPress={() => this.onClickPush()} />
+        <PhoneInput
+          ref={ref => {
+            this.phone = ref;
+          }}
+        />
+        <Button title="Next" onPress={this.onClickPush} />
       </View>
     );
   }
 
-  onClickPop = async () => {
-    await Navigation.pop(this.props.componentId);
-  };
-
   onClickPush = async () => {
+    // validate phone number
+
+    this.props.storeFBData({
+      data: {
+        number: this.phone.getValue(),
+      },
+    });
+
+    // send text to entered number
+
     await Navigation.push(this.props.componentId, {
       component: {
         name: SCREENS.REGISTER.PHONECONFIRM,
@@ -44,9 +56,11 @@ export class Phone extends Component {
   };
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({ state });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ storeFBData }, dispatch);
+};
 
 export const PhoneScreen = connect(
   mapStateToProps,

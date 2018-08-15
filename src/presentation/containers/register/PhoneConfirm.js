@@ -10,7 +10,7 @@ export class Phone extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Confirm Phone #</Text>
+        <Text>Confirm code sent to {this.props.number}</Text>
         <Button title="Back" onPress={() => this.onClickPop()} />
       </View>
     );
@@ -21,7 +21,9 @@ export class Phone extends Component {
   };
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = ({ registerReducer }) => ({
+  number: registerReducer.rUser.number,
+});
 
 const mapDispatchToProps = {};
 
