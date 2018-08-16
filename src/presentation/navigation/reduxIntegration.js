@@ -6,6 +6,7 @@ import type { Store as StoreType } from 'redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { getStore } from '../redux';
+import Compositor from './Compositor';
 
 export const decorateWithProvider = (
   Component: React.ComponentType<*>,
@@ -19,7 +20,9 @@ export const decorateWithProvider = (
       return (
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
-            <Component {...this.props} />
+            <Compositor {...this.props}>
+              <Component {...this.props} />
+            </Compositor>
           </PersistGate>
         </Provider>
       );

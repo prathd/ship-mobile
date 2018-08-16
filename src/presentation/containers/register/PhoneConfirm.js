@@ -17,7 +17,7 @@ export class Phone extends Component {
   }
 
   onClickPop = async () => {
-    await Navigation.pop(this.props.componentId);
+    await this.props.pop();
   };
 }
 

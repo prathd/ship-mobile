@@ -115,7 +115,7 @@ export class Home extends Component<Props> {
   };
 
   pushPhoneScreen = async () => {
-    await Navigation.push(this.props.componentId, {
+    await this.props.push({
       component: {
         name: SCREENS.REGISTER.PHONE,
         options: {
@@ -136,7 +136,7 @@ export class Home extends Component<Props> {
   };
 
   pushDashboardScreen = async () => {
-    await Navigation.push(this.props.componentId, {
+    await this.props.push({
       component: {
         name: SCREENS.DASHBOARD.HOME,
         options: {

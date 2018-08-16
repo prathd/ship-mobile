@@ -27,7 +27,7 @@ export class Phone extends Component {
   onClickPush = async () => {
     // validate phone number
 
-    this.props.storeFBData({
+    await this.props.storeFBData({
       data: {
         number: this.phone.getValue(),
       },
@@ -35,7 +35,7 @@ export class Phone extends Component {
 
     // send text to entered number
 
-    await Navigation.push(this.props.componentId, {
+    await this.props.push({
       component: {
         name: SCREENS.REGISTER.PHONECONFIRM,
         options: {
@@ -56,7 +56,7 @@ export class Phone extends Component {
   };
 }
 
-const mapStateToProps = state => ({ state });
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({ storeFBData }, dispatch);

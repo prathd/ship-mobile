@@ -1,10 +1,14 @@
 // @flow strict
 
+import React, { Component } from 'react';
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 
 import { getStore } from '../redux';
 import { decorateWithProvider } from './reduxIntegration';
+import { CompositorPropsType } from '../flowTypes';
+
+import Compositor from './Compositor';
 
 import { HomeScreen } from '../containers/HomeScreen';
 import { PhoneScreen } from '../containers/register/PhoneScreen';
