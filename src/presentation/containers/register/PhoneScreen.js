@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { storeFBData } from '../../redux/actions';
 import { Text, View, Button, TextInput } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import PhoneInput from 'react-native-phone-input';
 
+import { storeFBData } from '../../redux/actions';
 import { SCREENS } from '../../navigation/screens';
 import { styles } from '../../styles/PhoneScreen.styles';
 
@@ -18,6 +18,7 @@ export class Phone extends Component {
           ref={ref => {
             this.phone = ref;
           }}
+          disabled={true}
         />
         <Button title="Next" onPress={this.onClickPush} />
       </View>

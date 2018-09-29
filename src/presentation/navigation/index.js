@@ -1,7 +1,7 @@
 // @flow strict
 
-import { registerListeners } from './listeners';
 import { registerScreens } from './screens';
+import { registerListeners } from './listeners';
 
 export const initializeNavigation = () => {
   registerScreens();
