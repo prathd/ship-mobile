@@ -19,7 +19,7 @@ export const registerListeners = () => {
           children: [
             {
               component: {
-                name: SCREENS.HOME,
+                name: SCREENS.LOGIN,
               },
             },
           ],

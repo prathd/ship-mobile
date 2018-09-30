@@ -10,46 +10,17 @@ import { CompositorPropsType } from '../flowTypes';
 
 import Compositor from './Compositor';
 
-import { HomeScreen } from '../containers/HomeScreen';
-import { PhoneScreen } from '../containers/register/PhoneScreen';
-import { PhoneConfirm } from '../containers/register/PhoneConfirm';
-import { DashboardScreen } from '../containers/dashboard/DashboardScreen';
-
-const REGISTER_SCREENS = {
-  PHONE: `navigation.app.register.PhoneScreen`,
-  PHONECONFIRM: `navigation.app.register.PhoneConfirm`,
-};
-
-const DASHBOARD_SCREENS = {
-  HOME: `navigation.app.dashboard.DashboardScreen`,
-};
+import { LoginScreen } from '../containers/LoginScreen';
 
 export const SCREENS = {
-  HOME: `navigation.app.HomeScreen`,
-  REGISTER: REGISTER_SCREENS,
-  DASHBOARD: DASHBOARD_SCREENS,
+  LOGIN: `navigation.app.LoginScreen`,
 };
 
 export const registerScreens = () => {
   const { store } = getStore();
 
   Navigation.registerComponent(
-    SCREENS.HOME,
-    decorateWithProvider(HomeScreen, store, Provider),
-  );
-
-  Navigation.registerComponent(
-    SCREENS.REGISTER.PHONE,
-    decorateWithProvider(PhoneScreen, store, Provider),
-  );
-
-  Navigation.registerComponent(
-    SCREENS.REGISTER.PHONECONFIRM,
-    decorateWithProvider(PhoneConfirm, store, Provider),
-  );
-
-  Navigation.registerComponent(
-    SCREENS.DASHBOARD.HOME,
-    decorateWithProvider(DashboardScreen, store, Provider),
+    SCREENS.LOGIN,
+    decorateWithProvider(LoginScreen, store, Provider),
   );
 };
