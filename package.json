@@ -9,7 +9,7 @@
     "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "eslint:fix": "eslint --fix src/** && npm run prettier",
     "info": "node node_modules/react-native/local-cli/cli.js info",
-    "ios": "react-native run-ios --simulator 'iPhone X'",
+    "ios": "react-native run-ios --simulator 'iPhone XS'",
     "precommit": "lint-staged",
     "prettier": "prettier --write 'src/**/*.js'",
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -22,13 +22,15 @@
     "react-native-fbsdk": "^0.7.0",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-navigation": "2.0.2452",
-    "react-native-phone-input": "^0.2.1",
+    "react-native-responsive-screen": "^1.1.9",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-batched-actions": "^0.3.0",
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.10.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^3.4.9",
+    "styled-components-modifiers": "^1.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -46,6 +48,8 @@
     "jest": "23.4.2",
     "lint-staged": "^7.2.0",
     "prettier": "^1.14.0",
+    "prop-types": "^15.6.2",
+    "react-dom": "16.4.1",
     "react-native-swiper": "^1.5.13",
     "react-test-renderer": "16.4.1"
   },
