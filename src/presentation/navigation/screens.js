@@ -11,9 +11,11 @@ import { CompositorPropsType } from '../flowTypes';
 import Compositor from './Compositor';
 
 import { LoginScreen } from '../containers/LoginScreen';
+import { PhoneScreen } from '../containers/PhoneScreen';
 
 export const SCREENS = {
   LOGIN: `navigation.app.LoginScreen`,
+  PHONE: `navigation.app.PhoneScreen`,
 };
 
 export const registerScreens = () => {
@@ -22,5 +24,10 @@ export const registerScreens = () => {
   Navigation.registerComponent(
     SCREENS.LOGIN,
     decorateWithProvider(LoginScreen, store, Provider),
+  );
+
+  Navigation.registerComponent(
+    SCREENS.PHONE,
+    decorateWithProvider(PhoneScreen, store, Provider),
   );
 };

@@ -5,6 +5,7 @@ import { Dimensions, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import theme from '../theme.style';
+import { SCREENS } from '../navigation/screens';
 
 import LoginButtons from '../components/blocks/LoginButtons';
 import GradientView from '../components/elements/GradientView';
@@ -40,7 +41,7 @@ export class Login extends Component<Props> {
               </Text>
             </LoginButtons.OpaqueButton>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.pushPhoneScreen}>
             <LoginButtons.TransparentButton>
               <Text modifiers={['black', 'xs', 'white']}>USE PHONE NUMBER</Text>
             </LoginButtons.TransparentButton>
@@ -49,6 +50,27 @@ export class Login extends Component<Props> {
       </GradientView>
     );
   }
+
+  pushPhoneScreen = async () => {
+    await this.props.push({
+      component: {
+        name: SCREENS.PHONE,
+        options: {
+          topBar: {
+            visible: false,
+          },
+          animations: {
+            push: {
+              enable: false,
+            },
+            pop: {
+              enable: false,
+            },
+          },
+        },
+      },
+    });
+  };
 }
 
 const mapStateToProps = state => ({});
