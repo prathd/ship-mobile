@@ -1,8 +1,5 @@
 import styled from 'styled-components';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 import TransparentButton from './TransparentButton';
 import OpaqueButton from './OpaqueButton';

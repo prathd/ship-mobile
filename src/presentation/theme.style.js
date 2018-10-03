@@ -1,7 +1,4 @@
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import { moderateScale } from './scale.utils';
 
 export default {
   // colors
@@ -18,10 +15,10 @@ export default {
   FF_LIGHT: 'Avenir-Light',
   FF_MEDIUM: 'Avenir-Medium',
 
-  FS_XS: hp('1.5%'),
-  FS_SM: hp('2%'),
-  FS_MD: hp('3%'),
-  FS_LG: hp('4%'),
-  FS_XL: hp('5%'),
-  FS_XXL: hp('6%'),
+  FS_XS: moderateScale(12),
+  FS_SM: moderateScale(16),
+  FS_MD: moderateScale(20),
+  FS_LG: moderateScale(24),
+  FS_XL: moderateScale(28),
+  FS_XXL: moderateScale(32),
 };

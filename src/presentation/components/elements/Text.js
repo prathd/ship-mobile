@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { applyStyleModifiers } from 'styled-components-modifiers';
 
 import theme from '../../theme.style';
@@ -48,6 +47,11 @@ const MODIFIER_CONFIG = {
   `,
   light_purple: props => `
     color: ${theme.LIGHT_PURPLE};
+  `,
+
+  // alignment
+  center: props => `
+    text-align: center;
   `,
 };
 

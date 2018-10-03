@@ -24,7 +24,7 @@ export class Login extends Component<Props> {
           containerStyle={{ width: Dimensions.get('window').width }}
         >
           <Slide>
-            <Text modifiers={['black', 'md', 'white']}>Welcome to Ship</Text>
+            <Text modifiers={['black', 'lg', 'white']}>Welcome to Ship</Text>
             <Text modifiers={['light', 'sm', 'white']}>
               Swipe to learn more.
             </Text>

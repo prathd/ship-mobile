@@ -18,6 +18,8 @@ const MODIFIER_CONFIG = {
 };
 
 const View = styled.View`
+  margin: 0;
+  padding: 0;
   ${applyStyleModifiers(MODIFIER_CONFIG)};
 `;
 

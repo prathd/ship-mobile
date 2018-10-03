@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+import { verticalScale } from '../../../scale.utils';
 import theme from '../../../theme.style';
 
 const OpaqueButton = styled.View`
@@ -9,7 +10,7 @@ const OpaqueButton = styled.View`
   border-width: 3;
 
   background-color: ${theme.WHITE};
-  height: ${hp('6%')};
+  height: ${verticalScale(40)};
 
   flex: 1;
   align-items: center;
