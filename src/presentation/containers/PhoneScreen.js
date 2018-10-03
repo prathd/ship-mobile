@@ -4,18 +4,25 @@ import { bindActionCreators } from 'redux';
 
 import theme from '../theme.style';
 
-import Text from '../components/elements/Text';
-import View from '../components/elements/View';
+import SignupInput from '../components/blocks/SignupInput';
+import PhoneInput from '../components/blocks/PhoneInput';
 
 type Props = {};
 export class Phone extends Component<Props> {
   render() {
     return (
-      <View flex={1} modifiers={['flex', 'center']}>
-        <Text>Hello</Text>
-      </View>
+      <SignupInput
+        back={this.onClickBack}
+        prompt={`What's your${'\n'}phone number?`}
+      >
+        <PhoneInput />
+      </SignupInput>
     );
   }
+
+  onClickBack = async () => {
+    await this.props.pop();
+  };
 }
 
 const mapStateToProps = state => ({});
