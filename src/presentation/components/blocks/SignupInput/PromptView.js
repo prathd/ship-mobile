@@ -7,7 +7,6 @@ import View from '../../elements/View';
 export default styled(View)`
   margin-top: ${verticalScale(120)};
   width: ${wp('100%')};
-  background-color: red;
   flex: 1;
   align-items: center;
   justify-content: center;

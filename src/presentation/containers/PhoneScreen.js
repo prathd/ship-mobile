@@ -6,6 +6,7 @@ import theme from '../theme.style';
 
 import SignupInput from '../components/blocks/SignupInput';
 import PhoneInput from '../components/blocks/PhoneInput';
+import CircleNextButton from '../components/elements/CircleNextButton';
 
 type Props = {};
 export class Phone extends Component<Props> {
@@ -16,6 +17,7 @@ export class Phone extends Component<Props> {
         prompt={`What's your${'\n'}phone number?`}
       >
         <PhoneInput />
+        <CircleNextButton />
       </SignupInput>
     );
   }

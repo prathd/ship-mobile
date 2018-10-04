@@ -18,7 +18,6 @@ import {
   Stop,
 } from 'react-native-svg';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import styled from 'styled-components';
 
 export default function SignupHeader(props) {
   return (

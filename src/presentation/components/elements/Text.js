@@ -48,6 +48,9 @@ const MODIFIER_CONFIG = {
   light_purple: props => `
     color: ${theme.LIGHT_PURPLE};
   `,
+  purple: props => `
+    color: ${theme.PURPLE};
+  `,
 
   // alignment
   center: props => `

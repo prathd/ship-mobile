@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { applyStyleModifiers } from 'styled-components-modifiers';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const MODIFIER_CONFIG = {
   flex: props => `
@@ -14,6 +15,9 @@ const MODIFIER_CONFIG = {
   `,
   column: props => `
     flex-direction: column;
+  `,
+  fullWidth: props => `
+    width: ${wp('100%')};
   `,
 };
 

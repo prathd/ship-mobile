@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-
 import View from '../../elements/View';
 
+import { moderateScale } from '../../../scale.utils';
+
 export default styled(View)`
-  position: absolute;
-  left: -1;
-  top: 0;
+  margin-left: ${moderateScale(15)};
 `;
