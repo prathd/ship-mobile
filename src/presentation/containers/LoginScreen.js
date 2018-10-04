@@ -41,7 +41,7 @@ export class Login extends Component<Props> {
               </Text>
             </LoginButtons.OpaqueButton>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.pushPhoneScreen}>
+          <TouchableOpacity onPress={this.pushNextScreen}>
             <LoginButtons.TransparentButton>
               <Text modifiers={['black', 'xs', 'white']}>USE PHONE NUMBER</Text>
             </LoginButtons.TransparentButton>
@@ -51,7 +51,7 @@ export class Login extends Component<Props> {
     );
   }
 
-  pushPhoneScreen = async () => {
+  pushNextScreen = async () => {
     await this.props.push({
       component: {
         name: SCREENS.PHONE,
