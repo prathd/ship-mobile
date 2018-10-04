@@ -7,7 +7,7 @@ import { SCREENS } from '../navigation/screens';
 
 import SignupInput from '../components/blocks/SignupInput';
 import VerifyCode from '../components/blocks/VerifyCode';
-import CircleNextButton from '../components/elements/CircleNextButton';
+import CreateAccountButton from '../components/blocks/CreateAccountButton';
 
 type Props = {};
 export class CreateAccount extends Component<Props> {
@@ -16,7 +16,7 @@ export class CreateAccount extends Component<Props> {
       <SignupInput back={this.popScreen} prompt={`Account Details`}>
         <VerifyCode />
         <TouchableOpacity onPress={this.pushNextScreen}>
-          <CircleNextButton />
+          <CreateAccountButton />
         </TouchableOpacity>
       </SignupInput>
     );
