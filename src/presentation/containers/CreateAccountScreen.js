@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { SCREENS } from '../navigation/screens';
 
 import SignupInput from '../components/blocks/SignupInput';
-import VerifyCode from '../components/blocks/VerifyCode';
+import EnterAccountInformation from '../components/blocks/EnterAccountInformation';
 import CreateAccountButton from '../components/blocks/CreateAccountButton';
 
 type Props = {};
@@ -14,7 +14,7 @@ export class CreateAccount extends Component<Props> {
   render() {
     return (
       <SignupInput back={this.popScreen} prompt={`Account Details`}>
-        <VerifyCode />
+        <EnterAccountInformation />
         <TouchableOpacity onPress={this.pushNextScreen}>
           <CreateAccountButton />
         </TouchableOpacity>
@@ -27,24 +27,7 @@ export class CreateAccount extends Component<Props> {
   };
 
   pushNextScreen = async () => {
-    await this.props.push({
-      component: {
-        name: SCREENS.DASHBOARD,
-        options: {
-          topBar: {
-            visible: false,
-          },
-          animations: {
-            push: {
-              enable: false,
-            },
-            pop: {
-              enable: false,
-            },
-          },
-        },
-      },
-    });
+    // TODO create next screen
   };
 
   resendCode = () => {
