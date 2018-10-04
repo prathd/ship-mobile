@@ -6,24 +6,59 @@ import { bindActionCreators } from 'redux';
 import theme from '../theme.style';
 import { SCREENS } from '../navigation/screens';
 
-import View from '../components/elements/View';
+import SignupInput from '../components/blocks/SignupInput';
+import VerifyCode from '../components/blocks/VerifyCode';
 import Text from '../components/elements/Text';
+import CircleNextButton from '../components/elements/CircleNextButton';
 
 type Props = {};
 export class PhoneConfirm extends Component<Props> {
   render() {
     return (
-      <View flex={1} modifiers={['flex', 'center']}>
-        <Text>Temporary Text</Text>
-        <TouchableOpacity onPress={this.popScreen}>
-          <Text>Back</Text>
+      <SignupInput
+        back={this.popScreen}
+        prompt={`Enter the 6 digit code${'\n'}sent to your device`}
+      >
+        <VerifyCode />
+        <TouchableOpacity onPress={this.pushNextScreen}>
+          <CircleNextButton />
         </TouchableOpacity>
-      </View>
+        <TouchableOpacity onPress={this.resendCode}>
+          <Text
+            modifiers={['heavy', 'xs', 'purple', 'vMargin10']}
+          >{`Didn't get a text?`}</Text>
+        </TouchableOpacity>
+      </SignupInput>
     );
+
+    pushNextScreen = async () => {
+      await this.props.push({
+        component: {
+          name: SCREENS.PHONE_CONFIRM,
+          options: {
+            topBar: {
+              visible: false,
+            },
+            animations: {
+              push: {
+                enable: false,
+              },
+              pop: {
+                enable: false,
+              },
+            },
+          },
+        },
+      });
+    };
   }
 
   popScreen = async () => {
     await this.props.pop();
+  };
+
+  resendCode = () => {
+    // TODO resend code
   };
 }
 

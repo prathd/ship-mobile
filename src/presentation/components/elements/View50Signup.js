@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import View from '../../elements/View';
+import View from './View';
 
-import { moderateScale, verticalScale } from '../../../scale.utils';
+import { moderateScale, verticalScale } from '../../scale.utils';
 
 export default styled(View)`
   height: ${verticalScale(50)};

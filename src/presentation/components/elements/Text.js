@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { applyStyleModifiers } from 'styled-components-modifiers';
 
+import { verticalScale } from '../../scale.utils';
 import theme from '../../theme.style';
 
 const MODIFIER_CONFIG = {
@@ -55,6 +56,11 @@ const MODIFIER_CONFIG = {
   // alignment
   center: props => `
     text-align: center;
+  `,
+
+  // margin or padding
+  vMargin10: props => `
+    margin-top: ${verticalScale(10)};
   `,
 };
 

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Platform, TouchableOpacity } from 'react-native';
-import styled from 'styled-components';
 
+import View50Signup from '../../elements/View50Signup';
 import View from '../../elements/View';
 import Text from '../../elements/Text';
 
 import CountryPicker from './CountryPicker';
-import PhoneRowView from './PhoneRowView';
 import InputTextView from './InputTextView';
 import TextInput from './TextInput';
 
@@ -41,7 +40,7 @@ export class PhoneInput extends Component<Props> {
     };
 
     return (
-      <PhoneRowView modifiers={['fullWidth', 'row']}>
+      <View50Signup modifiers={['fullWidth', 'row']}>
         <CountryPicker
           onChange={this.onChangeCountry}
           closeable
@@ -75,7 +74,7 @@ export class PhoneInput extends Component<Props> {
             />
           </View>
         </InputTextView>
-      </PhoneRowView>
+      </View50Signup>
     );
   }
 
