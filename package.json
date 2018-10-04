@@ -23,6 +23,7 @@
     "react-native": "0.56.0",
     "react-native-fbsdk": "^0.7.0",
     "react-native-linear-gradient": "^2.4.0",
+    "react-native-masked-text": "^1.9.1",
     "react-native-navigation": "2.0.2452",
     "react-native-responsive-screen": "^1.1.9",
     "react-native-safe-area-view": "^0.11.0",

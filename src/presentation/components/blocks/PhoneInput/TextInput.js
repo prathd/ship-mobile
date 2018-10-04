@@ -14,6 +14,6 @@ export default styled(TextInput)`
   border-bottom-color: ${theme.PURPLE};
   border-style: solid;
 
-  padding-bottom: 5;
-  padding-top: 5;
+  padding-bottom: ${verticalScale(5)};
+  padding-top: ${verticalScale(5)};
 `;

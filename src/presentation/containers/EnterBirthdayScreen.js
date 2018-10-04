@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { SCREENS } from '../navigation/screens';
 
 import SignupInput from '../components/blocks/SignupInput';
-import VerifyCode from '../components/blocks/VerifyCode';
+import BirthdayTextInput from '../components/blocks/BirthdayTextInput';
 import CircleNextButton from '../components/elements/CircleNextButton';
 
 type Props = {};
@@ -17,7 +17,7 @@ export class EnterBirthday extends Component<Props> {
         back={this.popScreen}
         prompt={`When is your${'\n'}birthday?`}
       >
-        <VerifyCode />
+        <BirthdayTextInput />
         <TouchableOpacity onPress={this.pushNextScreen}>
           <CircleNextButton />
         </TouchableOpacity>

@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { TextInput } from 'react-native';
+import { TextInputMask } from 'react-native-masked-text';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 import theme from '../../../theme.style';
 import { verticalScale } from '../../../scale.utils';
 
-export default styled(TextInput)`
+export default styled(TextInputMask)`
   font-family: ${theme.FF_MEDIUM};
   font-size: ${theme.FS_SM};
 
