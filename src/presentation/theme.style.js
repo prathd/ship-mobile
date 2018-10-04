@@ -3,6 +3,7 @@ import { moderateScale } from './scale.utils';
 export default {
   // colors
   WHITE: '#FFFFFF',
+  GREY: '#969696',
   PINK: '#F55D84',
   PURPLE: '#7659DD',
   LIGHT_PURPLE: '#8F5ACB',
