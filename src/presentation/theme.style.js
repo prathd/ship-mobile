@@ -23,12 +23,3 @@ export default {
   FS_XL: moderateScale(28),
   FS_XXL: moderateScale(32),
 };
-
-// new colors
-//
-// WHITE: '#FFFFFF',
-// GREY: '#969696',
-// PINK: '#FF9C68',
-// PURPLE: '#FB857F',
-// LIGHT_PURPLE: '#FAA6A2',
-// FADED_PURPLE: '#FDCFCD',
