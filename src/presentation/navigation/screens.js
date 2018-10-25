@@ -2,13 +2,8 @@
 
 import React, { Component } from 'react';
 import { Navigation } from 'react-native-navigation';
-import { Provider } from 'react-redux';
 
-import { getStore } from '../redux';
-import { decorateWithProvider } from './reduxIntegration';
-import { CompositorPropsType } from '../flowTypes';
-
-import Compositor from './Compositor';
+import { decorateWithProvider } from './apolloIntegration';
 
 import { LoginScreen } from '../containers/LoginScreen';
 import { PhoneScreen } from '../containers/PhoneScreen';
@@ -27,35 +22,33 @@ export const SCREENS = {
 };
 
 export const registerScreens = () => {
-  const { store } = getStore();
-
   Navigation.registerComponent(
     SCREENS.LOGIN,
-    decorateWithProvider(LoginScreen, store, Provider),
+    decorateWithProvider(LoginScreen),
   );
 
-  Navigation.registerComponent(
-    SCREENS.PHONE,
-    decorateWithProvider(PhoneScreen, store, Provider),
-  );
-
-  Navigation.registerComponent(
-    SCREENS.PHONE_CONFIRM,
-    decorateWithProvider(PhoneConfirmScreen, store, Provider),
-  );
-
-  Navigation.registerComponent(
-    SCREENS.ENTER_NAME,
-    decorateWithProvider(EnterNameScreen, store, Provider),
-  );
-
-  Navigation.registerComponent(
-    SCREENS.ENTER_BIRTHDAY,
-    decorateWithProvider(EnterBirthdayScreen, store, Provider),
-  );
-
-  Navigation.registerComponent(
-    SCREENS.CREATE_ACCOUNT,
-    decorateWithProvider(CreateAccountScreen, store, Provider),
-  );
+  // Navigation.registerComponent(
+  //   SCREENS.PHONE,
+  //   decorateWithProvider(PhoneScreen),
+  // );
+  //
+  // Navigation.registerComponent(
+  //   SCREENS.PHONE_CONFIRM,
+  //   decorateWithProvider(PhoneConfirmScreen),
+  // );
+  //
+  // Navigation.registerComponent(
+  //   SCREENS.ENTER_NAME,
+  //   decorateWithProvider(EnterNameScreen),
+  // );
+  //
+  // Navigation.registerComponent(
+  //   SCREENS.ENTER_BIRTHDAY,
+  //   decorateWithProvider(EnterBirthdayScreen),
+  // );
+  //
+  // Navigation.registerComponent(
+  //   SCREENS.CREATE_ACCOUNT,
+  //   decorateWithProvider(CreateAccountScreen),
+  // );
 };

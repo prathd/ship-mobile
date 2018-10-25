@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { connect, graphql, withApollo } from 'react-redux';
+import { compose } from 'react-apollo';
 import { bindActionCreators } from 'redux';
 import { Dimensions, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-swiper';
+import Config from 'react-native-config';
+
+import settings from '../../../settings';
 
 import theme from '../theme.style';
 import { SCREENS } from '../navigation/screens';
@@ -13,9 +17,9 @@ import ShipLogo from '../components/elements/ShipLogo';
 import Slide from '../components/elements/Slide';
 import Text from '../components/elements/Text';
 
-type Props = {};
-export class Login extends Component<Props> {
+export class Login extends Component {
   render() {
+    console.log('APOLLO: ', this.props, Config.API_URL, settings);
     return (
       <GradientView flex={1} modifiers={['flex', 'center']}>
         <Swiper
@@ -52,34 +56,36 @@ export class Login extends Component<Props> {
   }
 
   pushNextScreen = async () => {
-    await this.props.push({
-      component: {
-        name: SCREENS.PHONE,
-        options: {
-          topBar: {
-            visible: false,
-          },
-          animations: {
-            push: {
-              enable: false,
-            },
-            pop: {
-              enable: false,
-            },
-          },
-        },
-      },
-    });
+    // await this.props.push({
+    //   component: {
+    //     name: SCREENS.PHONE,
+    //     options: {
+    //       topBar: {
+    //         visible: false,
+    //       },
+    //       animations: {
+    //         push: {
+    //           enable: false,
+    //         },
+    //         pop: {
+    //           enable: false,
+    //         },
+    //       },
+    //     },
+    //   },
+    // });
   };
 }
 
-const mapStateToProps = state => ({});
+// const mapStateToProps = state => ({});
+//
+// const mapDispatchToProps = dispatch => {
+//   return bindActionCreators({}, dispatch);
+// };
+//
+// export const LoginScreen = connect(
+//   mapStateToProps,
+//   mapDispatchToProps,
+// )(Login);
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({}, dispatch);
-};
-
-export const LoginScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Login);
+export const LoginScreen = Login;
