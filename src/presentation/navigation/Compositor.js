@@ -1,23 +1,23 @@
-// @flow strict
-
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { connect } from 'react-redux';
 import { Navigation } from 'react-native-navigation';
-import { push, resetTo, pop } from '../redux/actions';
-import type { CompositorPropsType } from '../flowTypes';
+import { compose, graphql } from 'react-apollo';
 
-type State = {
-  isVisible: boolean,
-};
+import {
+  NAVIGATION_QUERY,
+  NAVIGATION_UPDATE,
+} from '../../data/graphql/Navigation.graphql';
 
-class Compositor extends Component<CompositorPropsType, State> {
+class Compositor extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       isVisible: true,
     };
 
+    this.navigate = this.navigate.bind(this);
+    this.pop = this.pop.bind(this);
     Navigation.events().registerCommandListener(
       this.onNavigatorEvent.bind(this),
     );
@@ -39,28 +39,75 @@ class Compositor extends Component<CompositorPropsType, State> {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    console.log(1, nextProps);
+    console.log(2, nextState);
+    console.log(3, this.props);
     if (nextState.isVisible) {
       // Check if we are displaying an in-app error notification
-      if (nextProps.showError) {
+      if (nextProps.navigation.showError) {
         // TODO Error message is pulled from redux store and showed to User
         return true;
       }
       // Check if we're to perform a pop
-      if (nextProps.isPop) {
+      if (nextProps.navigation.isPop) {
         Navigation.pop(nextProps.componentId);
         return true;
       }
       // Otherwise, if next screen is different from current, push or reset
-      if (nextProps.screen !== this.props.screen) {
-        if (nextProps.isReset) {
-          Navigation.setStackRoot(nextProps.componentId, nextProps.screen);
+      if (nextProps.navigation.screen !== this.props.navigation.screen) {
+        if (nextProps.navigation.isReset) {
+          Navigation.setStackRoot(nextProps.componentId, nextProps.navigation.screen);
         } else {
-          Navigation.push(nextProps.componentId, nextProps.screen);
+          Navigation.push(nextProps.componentId, nextProps.navigation.screen);
         }
         return true;
       }
     }
     return false;
+  }
+
+  navigate(screen, isReset) {
+    const stringifiedScreen = JSON.stringify(screen);
+    let newBackstack = this.props.navigation.backstack;
+    newBackstack.push(stringifiedScreen);
+
+    const nextState = Object.assign({}, this.props.navigation, {
+      screen: stringifiedScreen,
+      isReset,
+      backstack: isReset ? [stringifiedScreen] : newBackstack,
+      isPop: false,
+      showError: false,
+    });
+
+    delete nextState.__typename;
+
+    return this.props.updateNavigation({
+      variables: {
+        ...nextState,
+      },
+    });
+  }
+
+  pop() {
+    let { navigation } = this.props;
+    let poppedBackstack = navigation.backstack;
+    poppedBackstack.pop();
+
+    const nextState = Object.assign({}, navigation, {
+      screen: poppedBackstack[poppedBackstack.length - 1],
+      isReset: false,
+      backstack: poppedBackstack,
+      isPop: true,
+      showError: false,
+    });
+
+    delete nextState.__typename;
+
+    return this.props.updateNavigation({
+      variables: {
+        ...nextState,
+      },
+    });
   }
 
   /**
@@ -69,13 +116,14 @@ class Compositor extends Component<CompositorPropsType, State> {
   renderChildren = () => {
     return React.Children.map(this.props.children, child => {
       return React.cloneElement(child, {
-        screen: this.props.screen,
-        backstack: this.props.backstack,
-        isReset: this.props.isReset,
-        isPop: this.props.isPop,
-        push: this.props.push,
-        resetTo: this.props.resetTo,
-        pop: this.props.pop,
+        screen: this.props.navigation.screen,
+        backstack: this.props.navigation.backstack,
+        isReset: this.props.navigation.isReset,
+        isPop: this.props.navigation.isPop,
+        showError: this.props.navigation.showError,
+        push: screen => this.navigate(screen, false),
+        resetTo: screen => this.navigate(screen, true),
+        pop: () => this.pop(),
       });
     });
   };
@@ -85,30 +133,17 @@ class Compositor extends Component<CompositorPropsType, State> {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    screen: state.navigationReducer.screen,
-    backstack: state.navigationReducer.backstack,
-    isReset: state.navigationReducer.isReset,
-    isPop: state.navigationReducer.isPop,
-    showError: state.navigationReducer.showError,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  // We do not call these directly from Compositor; instead here we use this.props.navigator.
-  // These methods update the redux store and then Compositor actually responds to that navigation request.
-  // We wrap these in mapDispatchToProps for the purpose of passing these actions to the child component.
-  return {
-    push: screen => dispatch(push(screen)),
-    resetTo: screen => dispatch(resetTo(screen)),
-    pop: () => dispatch(pop()),
-  };
-};
-
-const reduxContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps,
+export default compose(
+  graphql(NAVIGATION_QUERY, {
+    props: ({ data: { navigation } }) => ({
+      navigation: {
+        ...navigation,
+        screen: !!navigation.screen
+          ? JSON.parse(navigation.screen)
+          : navigation.screen,
+        backstack: navigation.backstack.map(s => JSON.parse(s)),
+      },
+    }),
+  }),
+  graphql(NAVIGATION_UPDATE, { name: 'updateNavigation' }),
 )(Compositor);
-
-export default reduxContainer;

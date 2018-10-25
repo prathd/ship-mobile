@@ -52,13 +52,15 @@ export class Phone extends Component<Props> {
   };
 }
 
-const mapStateToProps = state => ({});
+// const mapStateToProps = state => ({});
+//
+// const mapDispatchToProps = dispatch => {
+//   return bindActionCreators({}, dispatch);
+// };
+//
+// export const PhoneScreen = connect(
+//   mapStateToProps,
+//   mapDispatchToProps,
+// )(Phone);
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({}, dispatch);
-};
-
-export const PhoneScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Phone);
+export const PhoneScreen = Phone;

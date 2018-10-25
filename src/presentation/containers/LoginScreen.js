@@ -19,7 +19,6 @@ import Text from '../components/elements/Text';
 
 export class Login extends Component {
   render() {
-    console.log('APOLLO: ', this.props, Config.API_URL, settings);
     return (
       <GradientView flex={1} modifiers={['flex', 'center']}>
         <Swiper
@@ -34,7 +33,8 @@ export class Login extends Component {
             </Text>
           </Slide>
           <Slide>
-            <ShipLogo source={require('../images/ship.png')} />
+            {/* <ShipLogo source={require('../images/ship.png')} /> */}
+            <Text>Hello</Text>
           </Slide>
         </Swiper>
         <LoginButtons>
@@ -56,36 +56,25 @@ export class Login extends Component {
   }
 
   pushNextScreen = async () => {
-    // await this.props.push({
-    //   component: {
-    //     name: SCREENS.PHONE,
-    //     options: {
-    //       topBar: {
-    //         visible: false,
-    //       },
-    //       animations: {
-    //         push: {
-    //           enable: false,
-    //         },
-    //         pop: {
-    //           enable: false,
-    //         },
-    //       },
-    //     },
-    //   },
-    // });
+    await this.props.push({
+      component: {
+        name: SCREENS.PHONE,
+        options: {
+          topBar: {
+            visible: false,
+          },
+          animations: {
+            push: {
+              enable: false,
+            },
+            pop: {
+              enable: false,
+            },
+          },
+        },
+      },
+    });
   };
 }
-
-// const mapStateToProps = state => ({});
-//
-// const mapDispatchToProps = dispatch => {
-//   return bindActionCreators({}, dispatch);
-// };
-//
-// export const LoginScreen = connect(
-//   mapStateToProps,
-//   mapDispatchToProps,
-// )(Login);
 
 export const LoginScreen = Login;

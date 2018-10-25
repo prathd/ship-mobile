@@ -27,28 +27,28 @@ export const registerScreens = () => {
     decorateWithProvider(LoginScreen),
   );
 
-  // Navigation.registerComponent(
-  //   SCREENS.PHONE,
-  //   decorateWithProvider(PhoneScreen),
-  // );
-  //
-  // Navigation.registerComponent(
-  //   SCREENS.PHONE_CONFIRM,
-  //   decorateWithProvider(PhoneConfirmScreen),
-  // );
-  //
-  // Navigation.registerComponent(
-  //   SCREENS.ENTER_NAME,
-  //   decorateWithProvider(EnterNameScreen),
-  // );
-  //
-  // Navigation.registerComponent(
-  //   SCREENS.ENTER_BIRTHDAY,
-  //   decorateWithProvider(EnterBirthdayScreen),
-  // );
-  //
-  // Navigation.registerComponent(
-  //   SCREENS.CREATE_ACCOUNT,
-  //   decorateWithProvider(CreateAccountScreen),
-  // );
+  Navigation.registerComponent(
+    SCREENS.PHONE,
+    decorateWithProvider(PhoneScreen),
+  );
+
+  Navigation.registerComponent(
+    SCREENS.PHONE_CONFIRM,
+    decorateWithProvider(PhoneConfirmScreen),
+  );
+
+  Navigation.registerComponent(
+    SCREENS.ENTER_NAME,
+    decorateWithProvider(EnterNameScreen),
+  );
+
+  Navigation.registerComponent(
+    SCREENS.ENTER_BIRTHDAY,
+    decorateWithProvider(EnterBirthdayScreen),
+  );
+
+  Navigation.registerComponent(
+    SCREENS.CREATE_ACCOUNT,
+    decorateWithProvider(CreateAccountScreen),
+  );
 };

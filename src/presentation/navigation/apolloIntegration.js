@@ -4,12 +4,11 @@ import * as React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import Config from 'react-native-config';
 
+import Compositor from './Compositor';
 import * as Utils from '../../domain/utils/';
 
-// TODO implement Compositor for RNN
-
 export const decorateWithProvider = Component => {
-  const wrappedComponent = class Scene extends React.Component<*> {
+  const wrappedComponent = class Scene extends React.Component {
     render() {
       const apiUrl = Config.__API_URL__;
       const client = Utils.createApolloClient({ apiUrl });
@@ -18,7 +17,9 @@ export const decorateWithProvider = Component => {
 
       return (
         <ApolloProvider client={client}>
-          <Component />
+          <Compositor {...this.props}>
+            <Component {...this.props} />
+          </Compositor>
         </ApolloProvider>
       );
     }
