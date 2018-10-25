@@ -39,9 +39,6 @@ class Compositor extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log(1, nextProps);
-    console.log(2, nextState);
-    console.log(3, this.props);
     if (nextState.isVisible) {
       // Check if we are displaying an in-app error notification
       if (nextProps.navigation.showError) {
