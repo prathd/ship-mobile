@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
-import { bindActionCreators } from 'redux';
 
 import { SCREENS } from '../navigation/screens';
 
@@ -52,13 +50,4 @@ export class EnterName extends Component<Props> {
   };
 }
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({}, dispatch);
-};
-
-export const EnterNameScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(EnterName);
+export const EnterNameScreen = EnterName;

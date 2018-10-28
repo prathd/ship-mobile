@@ -2,7 +2,7 @@
 
 import { AsyncStorage } from 'react-native';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-// import { persistCache } from 'apollo-cache-persist';
+import { CachePersistor, persistCache } from 'apollo-cache-persist';
 import { BatchHttpLink } from 'apollo-link-batch-http';
 import { ApolloLink } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
@@ -16,10 +16,16 @@ import { NAVIGATION_QUERY } from '../../data/graphql/Navigation.graphql';
 import settings from '../../../settings';
 import log from './log';
 
+const SCHEMA_VERSION = '1';
+const SCHEMA_VERSION_KEY = 'apollo-schema-version';
 const defaultState = {
   navigation: {
     __typename: 'Navigation',
-    screen: '',
+    screen: JSON.stringify({
+      component: {
+        name: `navigation.app.LoginScreen`,
+      },
+    }),
     isReset: false,
     backstack: [],
     isPop: false,
@@ -51,15 +57,33 @@ const mutations = {
   },
 };
 
-const createApolloClient = ({ apiUrl }) => {
+const createApolloClient = async ({ apiUrl }) => {
   const cache = new InMemoryCache();
   const httpLink = new BatchHttpLink({ uri: apiUrl, credentials: 'include' });
 
-  // persistCache({
-  //   cache,
-  //   storage: AsyncStorage,
-  //   debug: true,
-  // });
+  try {
+    const persistor = new CachePersistor({
+      cache,
+      storage: AsyncStorage,
+      debug: true,
+    });
+
+    // Read the current schema version from AsyncStorage.
+    const currentVersion = await AsyncStorage.getItem(SCHEMA_VERSION_KEY);
+
+    if (currentVersion === SCHEMA_VERSION) {
+      // If the current version matches the latest version,
+      // we're good to go and can restore the cache.
+      await persistor.restore();
+    } else {
+      // Otherwise, we'll want to purge the outdated persisted cache
+      // and mark ourselves as having updated to the latest version.
+      await persistor.purge();
+      await AsyncStorage.setItem(SCHEMA_VERSION_KEY, SCHEMA_VERSION);
+    }
+  } catch (e) {
+    console.log('Apollo cache could not be persisted', e);
+  }
 
   const stateLink = withClientState({
     cache,
@@ -72,7 +96,7 @@ const createApolloClient = ({ apiUrl }) => {
   });
   const allLinks = [stateLink, httpLink];
 
-  // if not in prod use a logger
+  // if not in production use a logger
   if (
     (settings.app.logging.apolloLogging && !Config.__TEST__) ||
     typeof window !== 'undefined'

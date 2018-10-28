@@ -1,10 +1,8 @@
-// @flow strict
-
 import { Navigation } from 'react-native-navigation';
 import { SCREENS } from './screens';
 
-export const registerListeners = () => {
-  Navigation.events().registerAppLaunchedListener(() => {
+export const registerListeners = async () => {
+  return Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setDefaultOptions({
       topBar: {
         visible: false,

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { connect, graphql, withApollo } from 'react-redux';
 import { compose } from 'react-apollo';
-import { bindActionCreators } from 'redux';
 import { Dimensions, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-swiper';
 import Config from 'react-native-config';
@@ -33,8 +31,7 @@ export class Login extends Component {
             </Text>
           </Slide>
           <Slide>
-            {/* <ShipLogo source={require('../images/ship.png')} /> */}
-            <Text>Hello</Text>
+            <ShipLogo source={require('../images/ship.png')} />
           </Slide>
         </Swiper>
         <LoginButtons>

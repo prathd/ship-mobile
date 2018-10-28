@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
-import { bindActionCreators } from 'redux';
 
 import { SCREENS } from '../navigation/screens';
 
@@ -55,13 +53,4 @@ export class EnterBirthday extends Component<Props> {
   };
 }
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({}, dispatch);
-};
-
-export const EnterBirthdayScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(EnterBirthday);
+export const EnterBirthdayScreen = EnterBirthday;

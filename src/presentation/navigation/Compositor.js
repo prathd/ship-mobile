@@ -16,26 +16,16 @@ class Compositor extends Component {
       isVisible: true,
     };
 
-    this.navigate = this.navigate.bind(this);
-    this.pop = this.pop.bind(this);
-    Navigation.events().registerCommandListener(
-      this.onNavigatorEvent.bind(this),
-    );
+    Navigation.events().bindComponent(this);
   }
 
-  /**
-   * If a backstack is present, it is possible to trigger push/pop/reset multiple times.
-   * This keeps track of the currently visible screen and ensures that only it currently executes navigation.
-   */
-  onNavigatorEvent(event) {
-    switch (event.id) {
-      case 'didAppear':
-        this.setState({ isVisible: true });
-        break;
-      case 'didDisappear':
-        this.setState({ isVisible: false });
-        break;
-    }
+  // Keeps track of the currently visible screen
+  componentDidAppear() {
+    this.setState({ isVisible: true });
+  }
+
+  componentDidDisappear() {
+    this.setState({ isVisible: false });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -48,30 +38,40 @@ class Compositor extends Component {
       // Check if we're to perform a pop
       if (nextProps.navigation.isPop) {
         Navigation.pop(nextProps.componentId);
-        return true;
+        return this.props.updateNavigation({
+          variables: {
+            isPop: false,
+          },
+        });
       }
       // Otherwise, if next screen is different from current, push or reset
       if (nextProps.navigation.screen !== this.props.navigation.screen) {
         if (nextProps.navigation.isReset) {
-          Navigation.setStackRoot(nextProps.componentId, nextProps.navigation.screen);
+          Navigation.setStackRoot(
+            nextProps.componentId,
+            nextProps.navigation.screen,
+          );
         } else {
           Navigation.push(nextProps.componentId, nextProps.navigation.screen);
         }
         return true;
       }
     }
+
     return false;
   }
 
   navigate(screen, isReset) {
+    const { navigation } = this.props;
     const stringifiedScreen = JSON.stringify(screen);
-    let newBackstack = this.props.navigation.backstack;
-    newBackstack.push(stringifiedScreen);
+    let newBackstack = navigation.backstack;
+    newBackstack.push(navigation.screen);
+    newBackstack = newBackstack.map(s => JSON.stringify(s));
 
     const nextState = Object.assign({}, this.props.navigation, {
       screen: stringifiedScreen,
       isReset,
-      backstack: isReset ? [stringifiedScreen] : newBackstack,
+      backstack: isReset ? [] : newBackstack,
       isPop: false,
       showError: false,
     });
@@ -86,19 +86,16 @@ class Compositor extends Component {
   }
 
   pop() {
-    let { navigation } = this.props;
-    let poppedBackstack = navigation.backstack;
-    poppedBackstack.pop();
-
+    const { navigation } = this.props;
+    const poppedBackstack = navigation.backstack.map(s => JSON.stringify(s));
+    const poppedScreen = poppedBackstack.pop();
     const nextState = Object.assign({}, navigation, {
-      screen: poppedBackstack[poppedBackstack.length - 1],
+      screen: poppedScreen ? poppedScreen : JSON.stringify(navigation.screen),
       isReset: false,
       backstack: poppedBackstack,
       isPop: true,
       showError: false,
     });
-
-    delete nextState.__typename;
 
     return this.props.updateNavigation({
       variables: {
@@ -107,9 +104,6 @@ class Compositor extends Component {
     });
   }
 
-  /**
-   * Copy props to all child nodes
-   */
   renderChildren = () => {
     return React.Children.map(this.props.children, child => {
       return React.cloneElement(child, {

@@ -2,7 +2,9 @@
 
 import React, { Component } from 'react';
 import { Navigation } from 'react-native-navigation';
+import Config from 'react-native-config';
 
+import * as Utils from '../../domain/utils/';
 import { decorateWithProvider } from './apolloIntegration';
 
 import { LoginScreen } from '../containers/LoginScreen';
@@ -21,34 +23,38 @@ export const SCREENS = {
   CREATE_ACCOUNT: `navigation.app.CreateAccountScreen`,
 };
 
-export const registerScreens = () => {
+export const registerScreens = async () => {
+  const apiUrl = Config.__API_URL__;
+  const client = await Utils.createApolloClient({ apiUrl });
+  Utils.log.info(`Connecting to GraphQL backend at: ${apiUrl}`);
+
   Navigation.registerComponent(
     SCREENS.LOGIN,
-    decorateWithProvider(LoginScreen),
+    decorateWithProvider(LoginScreen, client),
   );
 
   Navigation.registerComponent(
     SCREENS.PHONE,
-    decorateWithProvider(PhoneScreen),
+    decorateWithProvider(PhoneScreen, client),
   );
 
   Navigation.registerComponent(
     SCREENS.PHONE_CONFIRM,
-    decorateWithProvider(PhoneConfirmScreen),
+    decorateWithProvider(PhoneConfirmScreen, client),
   );
 
   Navigation.registerComponent(
     SCREENS.ENTER_NAME,
-    decorateWithProvider(EnterNameScreen),
+    decorateWithProvider(EnterNameScreen, client),
   );
 
   Navigation.registerComponent(
     SCREENS.ENTER_BIRTHDAY,
-    decorateWithProvider(EnterBirthdayScreen),
+    decorateWithProvider(EnterBirthdayScreen, client),
   );
 
   Navigation.registerComponent(
     SCREENS.CREATE_ACCOUNT,
-    decorateWithProvider(CreateAccountScreen),
+    decorateWithProvider(CreateAccountScreen, client),
   );
 };

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
-import { bindActionCreators } from 'redux';
 
 import theme from '../theme.style';
 import { SCREENS } from '../navigation/screens';
@@ -62,13 +60,4 @@ export class PhoneConfirm extends Component<Props> {
   };
 }
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({}, dispatch);
-};
-
-export const PhoneConfirmScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(PhoneConfirm);
+export const PhoneConfirmScreen = PhoneConfirm;

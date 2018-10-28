@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
-import { bindActionCreators } from 'redux';
 
 import { SCREENS } from '../navigation/screens';
 
@@ -35,13 +33,4 @@ export class CreateAccount extends Component<Props> {
   };
 }
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({}, dispatch);
-};
-
-export const CreateAccountScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CreateAccount);
+export const CreateAccountScreen = CreateAccount;
