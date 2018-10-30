@@ -19,12 +19,9 @@ export class PhoneInput extends Component<Props> {
 
     this.onChangeCountry = this.onChangeCountry.bind(this);
     this.onChangeModal = this.onChangeModal.bind(this);
+    this.onChangePhoneNumber = this.onChangePhoneNumber.bind(this);
 
     this.state = {
-      country: {
-        cca2: 'US',
-        callingCode: '1',
-      },
       modalVisible: false,
     };
   }
@@ -45,7 +42,7 @@ export class PhoneInput extends Component<Props> {
           onChange={this.onChangeCountry}
           closeable
           styles={countryPickerCustomStyles}
-          cca2={this.state.country.cca2}
+          cca2={this.props.country.cca2}
           showCallingCode
           filterable
           modalVisible={this.state.modalVisible}
@@ -54,7 +51,7 @@ export class PhoneInput extends Component<Props> {
         <InputTextView flex={10} modifiers={['flex', 'row', 'center']}>
           <TouchableOpacity onPress={() => this.onChangeModal(true)}>
             <Text modifiers={['medium', 'sm', 'purple']}>
-              +{this.state.country.callingCode}
+              +{this.props.country.callingCode}
             </Text>
           </TouchableOpacity>
           <View flex={1} modifier={['flex', 'center']}>
@@ -71,6 +68,8 @@ export class PhoneInput extends Component<Props> {
               placeholderTextColor={theme.GREY}
               selectionColor={theme.PURPLE}
               maxLength={20}
+              value={this.props.phone}
+              onChangeText={this.onChangePhoneNumber}
             />
           </View>
         </InputTextView>
@@ -78,8 +77,12 @@ export class PhoneInput extends Component<Props> {
     );
   }
 
+  onChangePhoneNumber(phone) {
+    this.props.onChange({ phone });
+  }
+
   onChangeCountry(country) {
-    this.setState({ country });
+    this.props.onChange({ country });
     this.refs.phoneNumberInput.root.focus();
   }
 

@@ -11,6 +11,8 @@ import ApolloClient from 'apollo-client';
 
 import Config from 'react-native-config';
 
+import { Mutation } from '../../data/mutations';
+import { defaultState } from '../../data/defaultState';
 import { NAVIGATION_QUERY } from '../../data/graphql/Navigation.graphql';
 
 import settings from '../../../settings';
@@ -18,44 +20,6 @@ import log from './log';
 
 const SCHEMA_VERSION = '1';
 const SCHEMA_VERSION_KEY = 'apollo-schema-version';
-const defaultState = {
-  navigation: {
-    __typename: 'Navigation',
-    screen: JSON.stringify({
-      component: {
-        name: `navigation.app.LoginScreen`,
-      },
-    }),
-    isReset: false,
-    backstack: [],
-    isPop: false,
-    showError: false,
-  },
-};
-
-const mutations = {
-  updateNavigation: (
-    _,
-    { screen, isReset, backstack, isPop, showError },
-    { cache },
-  ) => {
-    const previous = cache.readQuery({ query: NAVIGATION_QUERY });
-    const next = { screen, isReset, backstack, isPop, showError };
-
-    Object.keys(next).forEach(key => next[key] == null && delete next[key]);
-
-    const data = {
-      ...previous,
-      navigation: {
-        ...previous.navigation,
-        ...next,
-      },
-    };
-
-    cache.writeQuery({ query: NAVIGATION_QUERY, data });
-    return null;
-  },
-};
 
 const createApolloClient = async ({ apiUrl }) => {
   const cache = new InMemoryCache();
@@ -87,11 +51,7 @@ const createApolloClient = async ({ apiUrl }) => {
 
   const stateLink = withClientState({
     cache,
-    resolvers: {
-      Mutation: {
-        ...mutations,
-      },
-    },
+    resolvers: { Mutation },
     defaults: defaultState,
   });
   const allLinks = [stateLink, httpLink];

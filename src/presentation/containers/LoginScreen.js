@@ -35,7 +35,7 @@ export class Login extends Component {
           </Slide>
         </Swiper>
         <LoginButtons>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.loginWithFacebook}>
             <LoginButtons.OpaqueButton>
               <Text modifiers={['black', 'xs', 'light_purple']}>
                 CONTINUE WITH FACEBOOK
@@ -51,6 +51,11 @@ export class Login extends Component {
       </GradientView>
     );
   }
+
+  loginWithFacebook = async () => {
+    // TODO
+    console.log('LOGIN WITH FACEBOOK SELECTED');
+  };
 
   pushNextScreen = async () => {
     await this.props.push({

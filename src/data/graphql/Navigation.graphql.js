@@ -1,5 +1,7 @@
 import gql from 'graphql-tag';
 
+// @client
+
 export const NAVIGATION_QUERY = gql`
   query ReadNavigation {
     navigation @client {
