@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
+import { compose, graphql } from 'react-apollo';
 
+import {
+  QUERY_USER_STATE,
+  UPDATE_USER_STATE,
+} from '../../data/graphql/User.graphql';
 import { SCREENS } from '../navigation/screens';
 
 import SignupInput from '../components/blocks/SignupInput';
@@ -9,10 +14,18 @@ import CircleNextButton from '../components/elements/CircleNextButton';
 
 type Props = {};
 export class EnterName extends Component<Props> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: this.props.UserState.name || '',
+    };
+  }
+
   render() {
     return (
       <SignupInput back={this.popScreen} prompt={`What's your name?`}>
-        <NameTextInput />
+        <NameTextInput onChange={this.onChange} name={this.state.name} />
         <TouchableOpacity onPress={this.pushNextScreen}>
           <CircleNextButton />
         </TouchableOpacity>
@@ -20,11 +33,19 @@ export class EnterName extends Component<Props> {
     );
   }
 
+  onChange = args => {
+    this.setState({ ...args });
+  };
+
   popScreen = async () => {
     await this.props.pop();
   };
 
   pushNextScreen = async () => {
+    await this.props.updateUserState({
+      variables: { name: this.state.name },
+    });
+
     await this.props.push({
       component: {
         name: SCREENS.ENTER_BIRTHDAY,
@@ -44,10 +65,13 @@ export class EnterName extends Component<Props> {
       },
     });
   };
-
-  resendCode = () => {
-    // TODO resend code
-  };
 }
 
-export const EnterNameScreen = EnterName;
+export const EnterNameScreen = compose(
+  graphql(QUERY_USER_STATE, {
+    props: ({ data: { UserState } }) => ({
+      UserState,
+    }),
+  }),
+  graphql(UPDATE_USER_STATE, { name: 'updateUserState' }),
+)(EnterName);

@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 
 export const NAVIGATION_QUERY = gql`
   query ReadNavigation {
-    navigation @client {
+    Navigation @client {
       screen
       isReset
       backstack

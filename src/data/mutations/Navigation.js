@@ -13,8 +13,8 @@ export default {
 
     const data = {
       ...previous,
-      navigation: {
-        ...previous.navigation,
+      Navigation: {
+        ...previous.Navigation,
         ...next,
       },
     };

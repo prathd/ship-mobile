@@ -54,7 +54,6 @@ export class Login extends Component {
 
   loginWithFacebook = async () => {
     // TODO
-    console.log('LOGIN WITH FACEBOOK SELECTED');
   };
 
   pushNextScreen = async () => {

@@ -4,11 +4,8 @@ import { compose, graphql } from 'react-apollo';
 
 import theme from '../theme.style';
 import { SCREENS } from '../navigation/screens';
-import {
-  PHONE_QUERY,
-  VERIIFY_PHONE_NUMBER,
-  SAVE_PHONE_LOCALLY,
-} from '../../data/graphql/Auth.graphql';
+import { VERIIFY_PHONE_NUMBER } from '../../data/graphql/Auth.graphql';
+import { QUERY_USER_STATE } from '../../data/graphql/User.graphql';
 
 import SignupInput from '../components/blocks/SignupInput';
 import VerifyCode from '../components/blocks/VerifyCode';
@@ -57,18 +54,14 @@ export class PhoneConfirm extends Component<Props> {
       // verify code
       const { data } = await this.props.verifyPhoneNumber({
         variables: {
-          id: this.props.phone.id,
+          id: this.props.UserState.phone.id,
           code: parseInt(this.state.code),
         },
       });
-      const { id, phone, countryCode, verified } = data.verifyPhoneNumber;
+      const { verified } = data.verifyPhoneNumber;
 
       // if successful save locally & push next screen
       if (verified) {
-        await this.props.savePhoneLocally({
-          variables: { id, phone, countryCode, verified },
-        });
-
         return this.props.push({
           component: {
             name: SCREENS.ENTER_NAME,
@@ -88,6 +81,10 @@ export class PhoneConfirm extends Component<Props> {
           },
         });
       }
+
+      alert(
+        'There was a problem confirming the entered code. Please try again.',
+      );
     } catch (e) {
       console.log(e);
 
@@ -102,11 +99,13 @@ export class PhoneConfirm extends Component<Props> {
 }
 
 export const PhoneConfirmScreen = compose(
-  graphql(PHONE_QUERY, {
-    props: ({ data: { phone } }) => ({
-      phone,
+  graphql(QUERY_USER_STATE, {
+    props: ({ data: { UserState } }) => ({
+      UserState: {
+        ...UserState,
+        phone: JSON.parse(UserState.phone),
+      },
     }),
   }),
   graphql(VERIIFY_PHONE_NUMBER, { name: 'verifyPhoneNumber' }),
-  graphql(SAVE_PHONE_LOCALLY, { name: 'savePhoneLocally' }),
 )(PhoneConfirm);

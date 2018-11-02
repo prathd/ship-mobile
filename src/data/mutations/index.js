@@ -1,7 +1,7 @@
 import Navigation from './Navigation';
-import Auth from './Auth';
+import User from './User';
 
 export const Mutation = {
   ...Navigation,
-  ...Auth,
+  ...User,
 };

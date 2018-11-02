@@ -1,5 +1,5 @@
 export const defaultState = {
-  navigation: {
+  Navigation: {
     __typename: 'Navigation',
     screen: JSON.stringify({
       component: {
@@ -11,11 +11,11 @@ export const defaultState = {
     isPop: false,
     showError: false,
   },
-  phone: {
-    __typename: 'Phone',
-    id: '',
-    phone: '',
-    countryCode: 1,
-    verified: false,
+  UserState: {
+    __typename: 'UserState',
+    phone: '{}',
+    name: '',
+    birthday: '',
+    gender: 'MALE',
   },
 };

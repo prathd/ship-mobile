@@ -19,7 +19,6 @@ export class PhoneInput extends Component<Props> {
 
     this.onChangeCountry = this.onChangeCountry.bind(this);
     this.onChangeModal = this.onChangeModal.bind(this);
-    this.onChangePhoneNumber = this.onChangePhoneNumber.bind(this);
 
     this.state = {
       modalVisible: false,
@@ -69,16 +68,12 @@ export class PhoneInput extends Component<Props> {
               selectionColor={theme.PURPLE}
               maxLength={20}
               value={this.props.phone}
-              onChangeText={this.onChangePhoneNumber}
+              onChangeText={phone => this.props.onChange({ phone })}
             />
           </View>
         </InputTextView>
       </View50Signup>
     );
-  }
-
-  onChangePhoneNumber(phone) {
-    this.props.onChange({ phone });
   }
 
   onChangeCountry(country) {

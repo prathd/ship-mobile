@@ -23,32 +23,16 @@ const SCHEMA_VERSION_KEY = 'apollo-schema-version';
 
 const createApolloClient = async ({ apiUrl }) => {
   const cache = new InMemoryCache();
+
+  const persistor = new CachePersistor({
+    cache,
+    storage: AsyncStorage,
+    trigger: 'write',
+    serialize: true,
+    debug: true,
+  });
+
   const httpLink = new BatchHttpLink({ uri: apiUrl, credentials: 'include' });
-
-  try {
-    const persistor = new CachePersistor({
-      cache,
-      storage: AsyncStorage,
-      debug: true,
-    });
-
-    // Read the current schema version from AsyncStorage.
-    const currentVersion = await AsyncStorage.getItem(SCHEMA_VERSION_KEY);
-
-    if (currentVersion === SCHEMA_VERSION) {
-      // If the current version matches the latest version,
-      // we're good to go and can restore the cache.
-      await persistor.restore();
-    } else {
-      // Otherwise, we'll want to purge the outdated persisted cache
-      // and mark ourselves as having updated to the latest version.
-      await persistor.purge();
-      await AsyncStorage.setItem(SCHEMA_VERSION_KEY, SCHEMA_VERSION);
-    }
-  } catch (e) {
-    console.log('Apollo cache could not be persisted', e);
-  }
-
   const stateLink = withClientState({
     cache,
     resolvers: { Mutation },
@@ -67,6 +51,11 @@ const createApolloClient = async ({ apiUrl }) => {
   const clientParams = {
     link: ApolloLink.from(allLinks),
     cache,
+    defaultOptions: {
+      query: {
+        fetchPolicy: 'cache-first',
+      },
+    },
   };
 
   if (Config.__TEST__) {
@@ -75,6 +64,27 @@ const createApolloClient = async ({ apiUrl }) => {
         fetchPolicy: 'no-cache',
       },
     };
+
+    clientParams.connectToDevTools = true;
+  }
+
+  // restore cache (if applicable)
+  try {
+    // Read the current schema version from AsyncStorage.
+    const currentVersion = await AsyncStorage.getItem(SCHEMA_VERSION_KEY);
+
+    if (currentVersion === SCHEMA_VERSION) {
+      // If the current version matches the latest version,
+      // we're good to go and can restore the cache.
+      await persistor.restore();
+    } else {
+      // Otherwise, we'll want to purge the outdated persisted cache
+      // and mark ourselves as having updated to the latest version.
+      await persistor.purge();
+      await AsyncStorage.setItem(SCHEMA_VERSION_KEY, SCHEMA_VERSION);
+    }
+  } catch (e) {
+    console.log('Apollo cache could not be persisted', e);
   }
 
   const client = new ApolloClient(clientParams);

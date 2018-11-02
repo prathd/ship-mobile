@@ -40,6 +40,8 @@ export class EnterAccountInformation extends Component<Props> {
           placeholderTextColor={theme.GREY}
           selectionColor={theme.PURPLE}
           maxLength={50}
+          value={this.props.email}
+          onChangeText={email => this.props.onChange({ email })}
         />
         <PasswordView>
           <TextInput
@@ -52,6 +54,8 @@ export class EnterAccountInformation extends Component<Props> {
             placeholderTextColor={theme.GREY}
             selectionColor={theme.PURPLE}
             maxLength={50}
+            value={this.props.password}
+            onChangeText={password => this.props.onChange({ password })}
           />
           <EyeView>
             <TouchableOpacity onPress={this.toggleShowPassword}>

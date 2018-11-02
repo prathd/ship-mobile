@@ -25,6 +25,8 @@ export class NameTextInput extends Component<Props> {
           options={{
             format: 'MM/DD/YYYY',
           }}
+          value={this.props.birthday}
+          onChangeText={birthday => this.props.onChange({ birthday })}
         />
       </View50Signup>
     );

@@ -31,12 +31,12 @@ class Compositor extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (nextState.isVisible) {
       // Check if we are displaying an in-app error notification
-      if (nextProps.navigation.showError) {
+      if (nextProps.Navigation.showError) {
         // TODO Error message is pulled from redux store and showed to User
         return true;
       }
       // Check if we're to perform a pop
-      if (nextProps.navigation.isPop) {
+      if (nextProps.Navigation.isPop) {
         Navigation.pop(nextProps.componentId);
         return this.props.updateNavigation({
           variables: {
@@ -45,14 +45,14 @@ class Compositor extends Component {
         });
       }
       // Otherwise, if next screen is different from current, push or reset
-      if (nextProps.navigation.screen !== this.props.navigation.screen) {
-        if (nextProps.navigation.isReset) {
+      if (nextProps.Navigation.screen !== this.props.Navigation.screen) {
+        if (nextProps.Navigation.isReset) {
           Navigation.setStackRoot(
             nextProps.componentId,
-            nextProps.navigation.screen,
+            nextProps.Navigation.screen,
           );
         } else {
-          Navigation.push(nextProps.componentId, nextProps.navigation.screen);
+          Navigation.push(nextProps.componentId, nextProps.Navigation.screen);
         }
         return true;
       }
@@ -62,13 +62,13 @@ class Compositor extends Component {
   }
 
   navigate(screen, isReset) {
-    const { navigation } = this.props;
+    const { Navigation } = this.props;
     const stringifiedScreen = JSON.stringify(screen);
-    let newBackstack = navigation.backstack;
-    newBackstack.push(navigation.screen);
+    let newBackstack = Navigation.backstack;
+    newBackstack.push(Navigation.screen);
     newBackstack = newBackstack.map(s => JSON.stringify(s));
 
-    const nextState = Object.assign({}, this.props.navigation, {
+    const nextState = Object.assign({}, this.props.Navigation, {
       screen: stringifiedScreen,
       isReset,
       backstack: isReset ? [] : newBackstack,
@@ -86,11 +86,11 @@ class Compositor extends Component {
   }
 
   pop() {
-    const { navigation } = this.props;
-    const poppedBackstack = navigation.backstack.map(s => JSON.stringify(s));
+    const { Navigation } = this.props;
+    const poppedBackstack = Navigation.backstack.map(s => JSON.stringify(s));
     const poppedScreen = poppedBackstack.pop();
-    const nextState = Object.assign({}, navigation, {
-      screen: poppedScreen ? poppedScreen : JSON.stringify(navigation.screen),
+    const nextState = Object.assign({}, Navigation, {
+      screen: poppedScreen ? poppedScreen : JSON.stringify(Navigation.screen),
       isReset: false,
       backstack: poppedBackstack,
       isPop: true,
@@ -107,11 +107,11 @@ class Compositor extends Component {
   renderChildren = () => {
     return React.Children.map(this.props.children, child => {
       return React.cloneElement(child, {
-        screen: this.props.navigation.screen,
-        backstack: this.props.navigation.backstack,
-        isReset: this.props.navigation.isReset,
-        isPop: this.props.navigation.isPop,
-        showError: this.props.navigation.showError,
+        screen: this.props.Navigation.screen,
+        backstack: this.props.Navigation.backstack,
+        isReset: this.props.Navigation.isReset,
+        isPop: this.props.Navigation.isPop,
+        showError: this.props.Navigation.showError,
         push: screen => this.navigate(screen, false),
         resetTo: screen => this.navigate(screen, true),
         pop: () => this.pop(),
@@ -126,13 +126,13 @@ class Compositor extends Component {
 
 export default compose(
   graphql(NAVIGATION_QUERY, {
-    props: ({ data: { navigation } }) => ({
-      navigation: {
-        ...navigation,
-        screen: !!navigation.screen
-          ? JSON.parse(navigation.screen)
-          : navigation.screen,
-        backstack: navigation.backstack.map(s => JSON.parse(s)),
+    props: ({ data: { Navigation } }) => ({
+      Navigation: {
+        ...Navigation,
+        screen: !!Navigation.screen
+          ? JSON.parse(Navigation.screen)
+          : Navigation.screen,
+        backstack: Navigation.backstack.map(s => JSON.parse(s)),
       },
     }),
   }),

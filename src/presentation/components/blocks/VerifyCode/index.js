@@ -8,12 +8,6 @@ import TextInput from './TextInput';
 
 type Props = {};
 export class SignupInput extends Component<Props> {
-  constructor(props) {
-    super(props);
-
-    this.onChangeCode = this.onChangeCode.bind(this);
-  }
-
   render() {
     return (
       <View50Signup modifiers={['fullWidth', 'row']}>
@@ -31,14 +25,10 @@ export class SignupInput extends Component<Props> {
           selectionColor={theme.WHITE}
           maxLength={6}
           value={this.props.code}
-          onChangeText={this.onChangeCode}
+          onChangeText={code => this.props.onChange({ code })}
         />
       </View50Signup>
     );
-  }
-
-  onChangeCode(code) {
-    this.props.onChange({ code });
   }
 }
 

@@ -21,6 +21,8 @@ export class NameTextInput extends Component<Props> {
           placeholderTextColor={theme.GREY}
           selectionColor={theme.WHITE}
           maxLength={50}
+          value={this.props.name}
+          onChangeText={name => this.props.onChange({ name })}
         />
       </View50Signup>
     );
