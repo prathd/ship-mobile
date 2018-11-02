@@ -15,7 +15,9 @@ export class CreateAccountButton extends Component<Props> {
       <RelativeView modifiers={['row']}>
         <ButtonBackground />
         <AbsoluteView modifiers={['center', 'row']}>
-          <Text modifiers={['heavy', 'sm', 'white']}>Create Account</Text>
+          <Text modifiers={['heavy', 'sm', 'white']}>
+            {this.props.buttonText}
+          </Text>
         </AbsoluteView>
       </RelativeView>
     );

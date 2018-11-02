@@ -27,22 +27,25 @@ export class EnterAccountInformation extends Component<Props> {
       isChecked: false,
     };
   }
+
   render() {
     return (
       <View50Signup modifiers={['fullWidth', 'column']}>
-        <TextInput
-          name="email"
-          ref="email"
-          underlineColorAndroid="transparent"
-          placeholder="email address"
-          returnKeyType="done"
-          autoFocus
-          placeholderTextColor={theme.GREY}
-          selectionColor={theme.PURPLE}
-          maxLength={50}
-          value={this.props.email}
-          onChangeText={email => this.props.onChange({ email })}
-        />
+        {!this.props.passwordOnly && (
+          <TextInput
+            name="email"
+            ref="email"
+            underlineColorAndroid="transparent"
+            placeholder="email address"
+            returnKeyType="done"
+            autoFocus={!this.props.passwordOnly}
+            placeholderTextColor={theme.GREY}
+            selectionColor={theme.PURPLE}
+            maxLength={50}
+            value={this.props.email}
+            onChangeText={email => this.props.onChange({ email })}
+          />
+        )}
         <PasswordView>
           <TextInput
             name="password"
@@ -51,6 +54,7 @@ export class EnterAccountInformation extends Component<Props> {
             placeholder="password"
             secureTextEntry={this.state.hidePassword}
             returnKeyType="done"
+            autoFocus={this.props.passwordOnly}
             placeholderTextColor={theme.GREY}
             selectionColor={theme.PURPLE}
             maxLength={50}
@@ -63,28 +67,30 @@ export class EnterAccountInformation extends Component<Props> {
             </TouchableOpacity>
           </EyeView>
         </PasswordView>
-        <ContractView modifiers={['fullWidth', 'row']}>
-          <CheckBox
-            onClick={this.toggleCheckBox}
-            isChecked={this.state.isChecked}
-            checkedImage={
-              <Image source={require('../../../images/filled.png')} />
-            }
-            unCheckedImage={
-              <Image source={require('../../../images/unfilled.png')} />
-            }
-          />
-          <View flex={12} modifiers={['flex', 'row', 'fullWidth']}>
-            <TouchableOpacity onPress={this.toggleCheckBox}>
-              <Text modifiers={['light', 'xs']}>
-                I agree to the{' '}
-                <Text modifiers={['medium', 'xs', 'purple']}>
-                  Terms & Conditions
+        {!this.props.passwordOnly && (
+          <ContractView modifiers={['fullWidth', 'row']}>
+            <CheckBox
+              onClick={this.toggleCheckBox}
+              isChecked={this.props.agreeTOC}
+              checkedImage={
+                <Image source={require('../../../images/filled.png')} />
+              }
+              unCheckedImage={
+                <Image source={require('../../../images/unfilled.png')} />
+              }
+            />
+            <View flex={12} modifiers={['flex', 'row', 'fullWidth']}>
+              <TouchableOpacity onPress={this.toggleCheckBox}>
+                <Text modifiers={['light', 'xs']}>
+                  I agree to the{' '}
+                  <Text modifiers={['medium', 'xs', 'purple']}>
+                    Terms & Conditions
+                  </Text>
                 </Text>
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </ContractView>
+              </TouchableOpacity>
+            </View>
+          </ContractView>
+        )}
       </View50Signup>
     );
   }
@@ -94,7 +100,7 @@ export class EnterAccountInformation extends Component<Props> {
   };
 
   toggleCheckBox = () => {
-    this.setState({ isChecked: !this.state.isChecked });
+    this.props.onChange({ agreeTOC: !this.props.agreeTOC });
   };
 }
 

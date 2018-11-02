@@ -13,6 +13,8 @@ import { PhoneConfirmScreen } from '../containers/PhoneConfirmScreen';
 import { EnterNameScreen } from '../containers/EnterNameScreen';
 import { EnterBirthdayScreen } from '../containers/EnterBirthdayScreen';
 import { CreateAccountScreen } from '../containers/CreateAccountScreen';
+import { EnterPasswordScreen } from '../containers/EnterPasswordScreen';
+import { DashboardScreen } from '../containers/DashboardScreen';
 
 export const SCREENS = {
   LOGIN: `navigation.app.LoginScreen`,
@@ -21,6 +23,8 @@ export const SCREENS = {
   ENTER_NAME: `navigation.app.EnterNameScreen`,
   ENTER_BIRTHDAY: `navigation.app.EnterBirthdayScreen`,
   CREATE_ACCOUNT: `navigation.app.CreateAccountScreen`,
+  ENTER_PASSWORD: `navigation.app.EnterPasswordScreen`,
+  DASHBOARD: `navigation.app.DashboardScreen`,
 };
 
 export const registerScreens = async () => {
@@ -56,5 +60,15 @@ export const registerScreens = async () => {
   Navigation.registerComponent(
     SCREENS.CREATE_ACCOUNT,
     decorateWithProvider(CreateAccountScreen, client),
+  );
+
+  Navigation.registerComponent(
+    SCREENS.ENTER_PASSWORD,
+    decorateWithProvider(EnterPasswordScreen, client),
+  );
+
+  Navigation.registerComponent(
+    SCREENS.DASHBOARD,
+    decorateWithProvider(DashboardScreen, client),
   );
 };

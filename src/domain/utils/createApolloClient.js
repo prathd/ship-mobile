@@ -8,6 +8,7 @@ import { ApolloLink } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
 import { LoggingLink } from 'apollo-logger';
 import ApolloClient from 'apollo-client';
+import { setContext } from 'apollo-link-context';
 
 import Config from 'react-native-config';
 
@@ -38,7 +39,21 @@ const createApolloClient = async ({ apiUrl }) => {
     resolvers: { Mutation },
     defaults: defaultState,
   });
-  const allLinks = [stateLink, httpLink];
+
+  const authLink = setContext(async (request, previousContext) => {
+    token = await AsyncStorage.getItem('token');
+
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...(previousContext.headers || {}),
+        authorization: token ? `Bearer ${token}` : ``,
+      },
+    };
+  });
+
+  // concatenate apollo-links
+  const allLinks = [stateLink, authLink, httpLink];
 
   // if not in production use a logger
   if (

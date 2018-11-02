@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, AsyncStorage } from 'react-native';
-import { compose, graphql, withApollo } from 'react-apollo';
+import { compose, graphql } from 'react-apollo';
 
 import theme from '../theme.style';
 import { SCREENS } from '../navigation/screens';
@@ -103,11 +103,9 @@ export class Phone extends Component<Props> {
         });
       }
 
-      // TODO else redirect user to login (enter password screen)
-      // await alert('Phone already verified. Redirect to ENTER PASSWORD SCREEN.');
       return this.props.push({
         component: {
-          name: SCREENS.ENTER_NAME,
+          name: SCREENS.ENTER_PASSWORD,
           options: {
             topBar: {
               visible: false,

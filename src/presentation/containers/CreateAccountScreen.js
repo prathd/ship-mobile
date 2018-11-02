@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { compose, graphql } from 'react-apollo';
+import { AsyncStorage } from 'react-native';
 
 import { SCREENS } from '../navigation/screens';
-import { QUERY_USER_STATE, CREATE_USER } from '../../data/graphql/User.graphql';
+import { QUERY_USER_STATE } from '../../data/graphql/User.graphql';
+import { SIGNUP } from '../../data/graphql/Auth.graphql';
 
 import SignupInput from '../components/blocks/SignupInput';
 import EnterAccountInformation from '../components/blocks/EnterAccountInformation';
@@ -17,8 +19,10 @@ export class CreateAccount extends Component<Props> {
     this.state = {
       email: '',
       password: '',
+      agreeTOC: false,
     };
   }
+
   render() {
     return (
       <SignupInput back={this.popScreen} prompt={`Account Details`}>
@@ -26,9 +30,10 @@ export class CreateAccount extends Component<Props> {
           onChange={this.onChange}
           email={this.state.email}
           password={this.state.password}
+          agreeTOC={this.state.agreeTOC}
         />
         <TouchableOpacity onPress={this.pushNextScreen}>
-          <CreateAccountButton />
+          <CreateAccountButton buttonText={`Create Account`} />
         </TouchableOpacity>
       </SignupInput>
     );
@@ -43,22 +48,42 @@ export class CreateAccount extends Component<Props> {
   };
 
   pushNextScreen = async () => {
+    if (!this.state.agreeTOC) {
+      return alert('Please Read & Agree to the Terms & Conditions.');
+    }
+
     const userData = {
       variables: {
         name: this.props.UserState.name,
         birthday: new Date(this.props.UserState.birthday).toISOString(),
         gender: this.props.UserState.gender,
         phoneNumberId: this.props.UserState.phone.id,
+        agreeTOC: this.state.agreeTOC,
         email: this.state.email,
         password: this.state.password,
       },
     };
-
     const auth = await this.props.signup(userData);
 
-    // TODO
-    // add auth.token to BatchHttpLink headers
-    // set dashboard as root
+    await AsyncStorage.setItem('token', auth.data.signup.token);
+    await this.props.resetTo({
+      component: {
+        name: SCREENS.DASHBOARD,
+        options: {
+          topBar: {
+            visible: false,
+          },
+          animations: {
+            push: {
+              enable: false,
+            },
+            pop: {
+              enable: false,
+            },
+          },
+        },
+      },
+    });
   };
 }
 
@@ -71,5 +96,5 @@ export const CreateAccountScreen = compose(
       },
     }),
   }),
-  graphql(CREATE_USER, { name: 'signup' }),
+  graphql(SIGNUP, { name: 'signup' }),
 )(CreateAccount);
