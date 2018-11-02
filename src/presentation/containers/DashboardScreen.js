@@ -8,7 +8,7 @@ export class Dashboard extends Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Hello, {this.props.me.name}.</Text>
+        <Text>{(this.props.me && this.props.me.name) || 'Loading...'}</Text>
         <Text>This is the Dashboard!</Text>
       </View>
     );

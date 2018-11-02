@@ -4,6 +4,6 @@ import { registerScreens } from './screens';
 import { registerListeners } from './listeners';
 
 export const initializeNavigation = async () => {
-  await registerScreens();
-  await registerListeners();
+  const token = await registerScreens();
+  await registerListeners(token);
 };

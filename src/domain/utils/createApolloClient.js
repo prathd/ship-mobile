@@ -9,6 +9,7 @@ import { withClientState } from 'apollo-link-state';
 import { LoggingLink } from 'apollo-logger';
 import ApolloClient from 'apollo-client';
 import { setContext } from 'apollo-link-context';
+import { onError } from 'apollo-link-error';
 
 import Config from 'react-native-config';
 
@@ -19,7 +20,7 @@ import { NAVIGATION_QUERY } from '../../data/graphql/Navigation.graphql';
 import settings from '../../../settings';
 import log from './log';
 
-const SCHEMA_VERSION = '1';
+const SCHEMA_VERSION = '0';
 const SCHEMA_VERSION_KEY = 'apollo-schema-version';
 
 const createApolloClient = async ({ apiUrl }) => {
@@ -41,6 +42,7 @@ const createApolloClient = async ({ apiUrl }) => {
   });
 
   const authLink = setContext(async (request, previousContext) => {
+    console.log('[authLink] Request made over Network');
     token = await AsyncStorage.getItem('token');
 
     // return the headers to the context so httpLink can read them
@@ -76,11 +78,10 @@ const createApolloClient = async ({ apiUrl }) => {
   if (Config.__TEST__) {
     clientParams.defaultOptions = {
       query: {
-        fetchPolicy: 'no-cache',
+        fetchPolicy: 'network-only',
+        errorPolicy: 'all',
       },
     };
-
-    clientParams.connectToDevTools = true;
   }
 
   // restore cache (if applicable)

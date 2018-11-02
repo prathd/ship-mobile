@@ -3,8 +3,10 @@
 import React, { Component } from 'react';
 import { Navigation } from 'react-native-navigation';
 import Config from 'react-native-config';
+import { AsyncStorage } from 'react-native';
 
 import * as Utils from '../../domain/utils/';
+import { QUERY_ME } from '../../data/graphql/User.graphql';
 import { decorateWithProvider } from './apolloIntegration';
 
 import { LoginScreen } from '../containers/LoginScreen';
@@ -30,6 +32,11 @@ export const SCREENS = {
 export const registerScreens = async () => {
   const apiUrl = Config.__API_URL__;
   const client = await Utils.createApolloClient({ apiUrl });
+
+  const {
+    data: { me },
+  } = await client.query({ query: QUERY_ME });
+
   Utils.log.info(`Connecting to GraphQL backend at: ${apiUrl}`);
 
   Navigation.registerComponent(
@@ -71,4 +78,6 @@ export const registerScreens = async () => {
     SCREENS.DASHBOARD,
     decorateWithProvider(DashboardScreen, client),
   );
+
+  return me ? AsyncStorage.getItem('token') : null;
 };
