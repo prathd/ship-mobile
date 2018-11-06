@@ -6,14 +6,13 @@ import {
   QUERY_USER_STATE,
   UPDATE_USER_STATE,
 } from '../../data/graphql/User.graphql';
-import { SCREENS } from '../navigation/screens';
+import { SCREENS } from '../../data/screens';
 
 import SignupInput from '../components/blocks/SignupInput';
 import NameTextInput from '../components/blocks/NameTextInput';
 import CircleNextButton from '../components/elements/CircleNextButton';
 
-type Props = {};
-export class EnterName extends Component<Props> {
+export class EnterName extends Component {
   constructor(props) {
     super(props);
 
@@ -46,7 +45,7 @@ export class EnterName extends Component<Props> {
       variables: { name: this.state.name },
     });
 
-    await this.props.push({
+    return this.props.push({
       component: {
         name: SCREENS.ENTER_BIRTHDAY,
         options: {

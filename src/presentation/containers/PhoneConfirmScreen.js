@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native';
 import { compose, graphql } from 'react-apollo';
 
 import theme from '../theme.style';
-import { SCREENS } from '../navigation/screens';
+import { SCREENS } from '../../data/screens';
 import { VERIIFY_PHONE_NUMBER } from '../../data/graphql/Auth.graphql';
 import { QUERY_USER_STATE } from '../../data/graphql/User.graphql';
 
@@ -12,8 +12,7 @@ import VerifyCode from '../components/blocks/VerifyCode';
 import Text from '../components/elements/Text';
 import CircleNextButton from '../components/elements/CircleNextButton';
 
-type Props = {};
-export class PhoneConfirm extends Component<Props> {
+export class PhoneConfirm extends Component {
   constructor(props) {
     super(props);
 

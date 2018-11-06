@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { compose, graphql } from 'react-apollo';
+import { compose, graphql, withApollo } from 'react-apollo';
 import { AsyncStorage } from 'react-native';
 
-import { SCREENS } from '../navigation/screens';
+import { SCREENS } from '../../data/screens';
 import { QUERY_USER_STATE } from '../../data/graphql/User.graphql';
 import { SIGNUP } from '../../data/graphql/Auth.graphql';
 
@@ -66,28 +66,12 @@ export class CreateAccount extends Component<Props> {
     const auth = await this.props.signup(userData);
 
     await AsyncStorage.setItem('token', auth.data.signup.token);
-    await this.props.resetTo({
-      component: {
-        name: SCREENS.DASHBOARD,
-        options: {
-          topBar: {
-            visible: false,
-          },
-          animations: {
-            push: {
-              enable: false,
-            },
-            pop: {
-              enable: false,
-            },
-          },
-        },
-      },
-    });
+    this.props.client.resetStore();
   };
 }
 
 export const CreateAccountScreen = compose(
+  withApollo,
   graphql(QUERY_USER_STATE, {
     props: ({ data: { UserState } }) => ({
       UserState: {

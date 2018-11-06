@@ -5,35 +5,51 @@ import gql from 'graphql-tag';
 export const NAVIGATION_QUERY = gql`
   query ReadNavigation {
     Navigation @client {
-      screen
-      isReset
-      backstack
+      side
+      left
+      center
+      right
+      currentTabIndex
+      isPush
       isPop
-      showError
+      isResetStack
+      isResetNavigator
     }
   }
 `;
 
 export const NAVIGATION_UPDATE = gql`
   mutation updateNavigation(
-    $screen: String
-    $isReset: Boolean
-    $backstack: [String]
+    $side: String
+    $left: String
+    $center: String
+    $right: String
+    $currentTabIndex: Int
+    $isPush: Boolean
     $isPop: Boolean
-    $showError: Boolean
+    $isResetStack: Boolean
+    $isResetNavigator: Boolean
   ) {
     updateNavigation(
-      screen: $screen
-      isReset: $isReset
-      backstack: $backstack
+      side: $side
+      left: $left
+      center: $center
+      right: $right
+      currentTabIndex: $currentTabIndex
+      isPush: $isPush
       isPop: $isPop
-      showError: $showError
+      isResetStack: $isResetStack
+      isResetNavigator: $isResetNavigator
     ) @client {
-      screen
-      isReset
-      backstack
+      side
+      left
+      center
+      right
+      currentTabIndex
+      isPush
       isPop
-      showError
+      isResetStack
+      isResetNavigator
     }
   }
 `;

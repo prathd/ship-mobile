@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { compose, graphql } from 'react-apollo';
 
-import { SCREENS } from '../navigation/screens';
+import { SCREENS } from '../../data/screens';
 import {
   QUERY_USER_STATE,
   UPDATE_USER_STATE,
@@ -12,8 +12,7 @@ import SignupInput from '../components/blocks/SignupInput';
 import BirthdayTextInput from '../components/blocks/BirthdayTextInput';
 import CircleNextButton from '../components/elements/CircleNextButton';
 
-type Props = {};
-export class EnterBirthday extends Component<Props> {
+export class EnterBirthday extends Component {
   constructor(props) {
     super(props);
 
@@ -51,7 +50,7 @@ export class EnterBirthday extends Component<Props> {
       variables: { birthday: this.state.birthday },
     });
 
-    await this.props.push({
+    return this.props.push({
       component: {
         name: SCREENS.CREATE_ACCOUNT,
         options: {

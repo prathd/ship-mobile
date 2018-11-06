@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { AsyncStorage } from 'react-native';
-import { compose, graphql } from 'react-apollo';
+import { compose, graphql, withApollo } from 'react-apollo';
 
-import { SCREENS } from '../navigation/screens';
+import { SCREENS } from '../../data/screens';
 import { QUERY_USER_STATE } from '../../data/graphql/User.graphql';
 import { LOGIN } from '../../data/graphql/Auth.graphql';
 
@@ -54,21 +54,73 @@ export class EnterPassword extends Component {
       const auth = await this.props.login(userData);
 
       await AsyncStorage.setItem('token', auth.data.login.token);
-      await this.props.resetTo({
-        component: {
-          name: SCREENS.DASHBOARD,
-          options: {
-            topBar: {
-              visible: false,
-            },
-            animations: {
-              push: {
-                enable: false,
+      await this.props.resetNavigator({
+        children: [
+          {
+            stack: {
+              id: 'dashboard',
+              children: [
+                {
+                  component: { name: SCREENS.DASHBOARD },
+                },
+              ],
+              options: {
+                bottomTab: {
+                  text: 'Only Tab',
+                  icon: require('../../presentation/images/ship.png')
+                },
+                topBar: {
+                  visible: false,
+                  drawBehind: true,
+                  animate: false,
+                },
+                animations: {
+                  push: {
+                    enable: false,
+                  },
+                  pop: {
+                    enable: false,
+                  },
+                },
               },
-              pop: {
-                enable: false,
+            },
+          },
+          {
+            stack: {
+              id: 'messenger',
+              children: [
+                {
+                  component: { name: SCREENS.MESSAGE_CENTER },
+                },
+              ],
+              options: {
+                bottomTab: {
+                  text: 'Only Tab',
+                  icon: require('../../presentation/images/ship.png')
+                },
+                topBar: {
+                  visible: false,
+                  drawBehind: true,
+                  animate: false,
+                },
+                animations: {
+                  push: {
+                    enable: false,
+                  },
+                  pop: {
+                    enable: false,
+                  },
+                },
               },
             },
+          },
+        ],
+        options: {
+          bottomTabs: {
+            currentTabIndex: 0,
+            visible: false,
+            drawBehind: true,
+            animate: false,
           },
         },
       });
@@ -80,6 +132,7 @@ export class EnterPassword extends Component {
 }
 
 export const EnterPasswordScreen = compose(
+  withApollo,
   graphql(QUERY_USER_STATE, {
     props: ({ data: { UserState } }) => ({
       UserState: {

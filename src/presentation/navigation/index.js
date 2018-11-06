@@ -1,9 +1,20 @@
 // @flow strict
 
+import { Navigation } from 'react-native-navigation';
 import { registerScreens } from './screens';
-import { registerListeners } from './listeners';
 
 export const initializeNavigation = async () => {
-  const token = await registerScreens();
-  await registerListeners(token);
+  return Navigation.events().registerAppLaunchedListener(async () => {
+    const defaultNavigation = await registerScreens();
+
+    Navigation.setRoot({
+      root: {
+        sideMenu: {
+          center: JSON.parse(defaultNavigation.center),
+          left: JSON.parse(defaultNavigation.left),
+          right: JSON.parse(defaultNavigation.right),
+        },
+      },
+    });
+  });
 };

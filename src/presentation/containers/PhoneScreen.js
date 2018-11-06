@@ -3,7 +3,7 @@ import { TouchableOpacity, AsyncStorage } from 'react-native';
 import { compose, graphql } from 'react-apollo';
 
 import theme from '../theme.style';
-import { SCREENS } from '../navigation/screens';
+import { SCREENS } from '../../data/screens';
 import { LOGIN_WITH_PHONE_NUMBER } from '../../data/graphql/Auth.graphql';
 import {
   QUERY_USER_STATE,
@@ -14,8 +14,7 @@ import SignupInput from '../components/blocks/SignupInput';
 import PhoneInput from '../components/blocks/PhoneInput';
 import CircleNextButton from '../components/elements/CircleNextButton';
 
-type Props = {};
-export class Phone extends Component<Props> {
+export class Phone extends Component {
   constructor(props) {
     super(props);
 

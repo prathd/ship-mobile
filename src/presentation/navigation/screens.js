@@ -1,12 +1,8 @@
-// @flow strict
-
-import React, { Component } from 'react';
 import { Navigation } from 'react-native-navigation';
 import Config from 'react-native-config';
-import { AsyncStorage } from 'react-native';
 
+import { SCREENS } from '../../data/screens';
 import * as Utils from '../../domain/utils/';
-import { QUERY_ME } from '../../data/graphql/User.graphql';
 import { decorateWithProvider } from './apolloIntegration';
 
 import { LoginScreen } from '../containers/LoginScreen';
@@ -17,25 +13,13 @@ import { EnterBirthdayScreen } from '../containers/EnterBirthdayScreen';
 import { CreateAccountScreen } from '../containers/CreateAccountScreen';
 import { EnterPasswordScreen } from '../containers/EnterPasswordScreen';
 import { DashboardScreen } from '../containers/DashboardScreen';
-
-export const SCREENS = {
-  LOGIN: `navigation.app.LoginScreen`,
-  PHONE: `navigation.app.PhoneScreen`,
-  PHONE_CONFIRM: `navigation.app.PhoneConfirmScreen`,
-  ENTER_NAME: `navigation.app.EnterNameScreen`,
-  ENTER_BIRTHDAY: `navigation.app.EnterBirthdayScreen`,
-  CREATE_ACCOUNT: `navigation.app.CreateAccountScreen`,
-  ENTER_PASSWORD: `navigation.app.EnterPasswordScreen`,
-  DASHBOARD: `navigation.app.DashboardScreen`,
-};
+import { SideMenuScreen } from '../containers/SideMenuScreen';
+import { PreferencesScreen } from '../containers/PreferencesScreen';
+import { MessageCenterScreen } from '../containers/MessageCenterScreen';
 
 export const registerScreens = async () => {
   const apiUrl = Config.__API_URL__;
-  const client = await Utils.createApolloClient({ apiUrl });
-
-  const {
-    data: { me },
-  } = await client.query({ query: QUERY_ME });
+  const { client, defaults } = await Utils.createApolloClient({ apiUrl });
 
   Utils.log.info(`Connecting to GraphQL backend at: ${apiUrl}`);
 
@@ -75,9 +59,24 @@ export const registerScreens = async () => {
   );
 
   Navigation.registerComponent(
+    SCREENS.SIDE_MENU,
+    decorateWithProvider(SideMenuScreen, client),
+  );
+
+  Navigation.registerComponent(
+    SCREENS.PREFERENCES,
+    decorateWithProvider(PreferencesScreen, client),
+  );
+
+  Navigation.registerComponent(
     SCREENS.DASHBOARD,
     decorateWithProvider(DashboardScreen, client),
   );
 
-  return me ? AsyncStorage.getItem('token') : null;
+  Navigation.registerComponent(
+    SCREENS.MESSAGE_CENTER,
+    decorateWithProvider(MessageCenterScreen, client),
+  );
+
+  return defaults.Navigation;
 };
