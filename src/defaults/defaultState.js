@@ -1,0 +1,74 @@
+import { SCREENS } from "../data/screens";
+
+export const defaultState = {
+  Navigation: {
+    __typename: 'Navigation',
+    mode: 0, // 0 - Login/Signup (stack) | 1 - Dashboard/Message Center (sideMenu)
+    isPopScreen: false,
+    isResetRoot: false,
+    isRestoreStack: false,
+    isPushScreen: false,
+    currentRoot: JSON.stringify({
+      stack: {
+        options: {
+          topBar: {
+            visible: false,
+            drawBehind: true,
+            animate: false,
+          },
+          animations: {
+            push: {
+              enable: false,
+            },
+            pop: {
+              enable: false,
+            },
+          },
+        },
+        children: [
+          {
+            component: { name: SCREENS.LOGIN },
+          },
+        ],
+      },
+    }),
+  },
+  UserState: {
+    __typename: 'UserState',
+    phone: '{}',
+    name: '',
+    birthday: '',
+    gender: 'MALE',
+  },
+};
+
+export const sideMenuRoot = screen => ({
+  sideMenu: {
+    left: { component: { name: SCREENS.SIDE_MENU } },
+    right: { component: { name: SCREENS.PREFERENCES } },
+    center: {
+      stack: {
+        children: [
+          {
+            component: { name: screen },
+          },
+        ],
+        options: {
+          topBar: {
+            visible: false,
+            drawBehind: true,
+            animate: false,
+          },
+          animations: {
+            push: {
+              enable: false,
+            },
+            pop: {
+              enable: false,
+            },
+          },
+        },
+      },
+    },
+  },
+});

@@ -82,44 +82,10 @@ export class Phone extends Component {
       });
 
       if (!verified) {
-        return this.props.push({
-          component: {
-            name: SCREENS.PHONE_CONFIRM,
-            options: {
-              topBar: {
-                visible: false,
-              },
-              animations: {
-                push: {
-                  enable: false,
-                },
-                pop: {
-                  enable: false,
-                },
-              },
-            },
-          },
-        });
+        return this.props.push(SCREENS.PHONE_CONFIRM);
       }
 
-      return this.props.push({
-        component: {
-          name: SCREENS.ENTER_PASSWORD,
-          options: {
-            topBar: {
-              visible: false,
-            },
-            animations: {
-              push: {
-                enable: false,
-              },
-              pop: {
-                enable: false,
-              },
-            },
-          },
-        },
-      });
+      return this.props.push(SCREENS.ENTER_PASSWORD);
     } catch (e) {
       console.log(e);
       alert('Phone Number was not able to be verified.');

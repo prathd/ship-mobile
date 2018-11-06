@@ -60,26 +60,7 @@ export class PhoneConfirm extends Component {
       const { verified } = data.verifyPhoneNumber;
 
       // if successful save locally & push next screen
-      if (verified) {
-        return this.props.push({
-          component: {
-            name: SCREENS.ENTER_NAME,
-            options: {
-              topBar: {
-                visible: false,
-              },
-              animations: {
-                push: {
-                  enable: false,
-                },
-                pop: {
-                  enable: false,
-                },
-              },
-            },
-          },
-        });
-      }
+      if (verified) return this.props.push(SCREENS.ENTER_NAME);
 
       alert(
         'There was a problem confirming the entered code. Please try again.',

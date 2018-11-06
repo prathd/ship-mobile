@@ -54,76 +54,7 @@ export class EnterPassword extends Component {
       const auth = await this.props.login(userData);
 
       await AsyncStorage.setItem('token', auth.data.login.token);
-      await this.props.resetNavigator({
-        children: [
-          {
-            stack: {
-              id: 'dashboard',
-              children: [
-                {
-                  component: { name: SCREENS.DASHBOARD },
-                },
-              ],
-              options: {
-                bottomTab: {
-                  text: 'Only Tab',
-                  icon: require('../../presentation/images/ship.png')
-                },
-                topBar: {
-                  visible: false,
-                  drawBehind: true,
-                  animate: false,
-                },
-                animations: {
-                  push: {
-                    enable: false,
-                  },
-                  pop: {
-                    enable: false,
-                  },
-                },
-              },
-            },
-          },
-          {
-            stack: {
-              id: 'messenger',
-              children: [
-                {
-                  component: { name: SCREENS.MESSAGE_CENTER },
-                },
-              ],
-              options: {
-                bottomTab: {
-                  text: 'Only Tab',
-                  icon: require('../../presentation/images/ship.png')
-                },
-                topBar: {
-                  visible: false,
-                  drawBehind: true,
-                  animate: false,
-                },
-                animations: {
-                  push: {
-                    enable: false,
-                  },
-                  pop: {
-                    enable: false,
-                  },
-                },
-              },
-            },
-          },
-        ],
-        options: {
-          bottomTabs: {
-            currentTabIndex: 0,
-            visible: false,
-            drawBehind: true,
-            animate: false,
-          },
-        },
-      });
+      this.props.resetStack(1);
     } catch (e) {
       console.log(e);
       alert('Error Logging In.');

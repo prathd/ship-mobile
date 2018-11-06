@@ -45,24 +45,7 @@ export class EnterName extends Component {
       variables: { name: this.state.name },
     });
 
-    return this.props.push({
-      component: {
-        name: SCREENS.ENTER_BIRTHDAY,
-        options: {
-          topBar: {
-            visible: false,
-          },
-          animations: {
-            push: {
-              enable: false,
-            },
-            pop: {
-              enable: false,
-            },
-          },
-        },
-      },
-    });
+    return this.props.push(SCREENS.ENTER_BIRTHDAY);
   };
 }
 

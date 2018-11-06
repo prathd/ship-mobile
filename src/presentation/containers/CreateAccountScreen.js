@@ -11,8 +11,7 @@ import SignupInput from '../components/blocks/SignupInput';
 import EnterAccountInformation from '../components/blocks/EnterAccountInformation';
 import CreateAccountButton from '../components/blocks/CreateAccountButton';
 
-type Props = {};
-export class CreateAccount extends Component<Props> {
+export class CreateAccount extends Component {
   constructor(props) {
     super(props);
 
@@ -66,7 +65,7 @@ export class CreateAccount extends Component<Props> {
     const auth = await this.props.signup(userData);
 
     await AsyncStorage.setItem('token', auth.data.signup.token);
-    this.props.client.resetStore();
+    this.props.resetStack(1);
   };
 }
 

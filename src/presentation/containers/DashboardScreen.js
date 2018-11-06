@@ -17,9 +17,7 @@ export class Dashboard extends Component {
           <Text>Right</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => this.logout()}>
-          <Text>
-            Logout
-          </Text>
+          <Text>Logout</Text>
         </TouchableOpacity>
       </View>
     );
@@ -27,7 +25,7 @@ export class Dashboard extends Component {
 
   logout = async () => {
     await AsyncStorage.removeItem('token');
-    await this.props.client.resetStore();
+    this.props.resetStack(0);
   }
 }
 

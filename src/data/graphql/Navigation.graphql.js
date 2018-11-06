@@ -5,51 +5,39 @@ import gql from 'graphql-tag';
 export const NAVIGATION_QUERY = gql`
   query ReadNavigation {
     Navigation @client {
-      side
-      left
-      center
-      right
-      currentTabIndex
-      isPush
-      isPop
-      isResetStack
-      isResetNavigator
+      mode
+      isPopScreen
+      isResetRoot
+      isRestoreStack
+      isPushScreen
+      currentRoot
     }
   }
 `;
 
 export const NAVIGATION_UPDATE = gql`
   mutation updateNavigation(
-    $side: String
-    $left: String
-    $center: String
-    $right: String
-    $currentTabIndex: Int
-    $isPush: Boolean
-    $isPop: Boolean
-    $isResetStack: Boolean
-    $isResetNavigator: Boolean
+    $mode: Int
+    $isPopScreen: Boolean
+    $isResetRoot: Boolean
+    $isRestoreStack: Boolean
+    $isPushScreen: Boolean
+    $currentRoot: String
   ) {
-    updateNavigation(
-      side: $side
-      left: $left
-      center: $center
-      right: $right
-      currentTabIndex: $currentTabIndex
-      isPush: $isPush
-      isPop: $isPop
-      isResetStack: $isResetStack
-      isResetNavigator: $isResetNavigator
+    updateNavigation (
+      mode: $mode
+      isPopScreen: $isPopScreen
+      isResetRoot: $isResetRoot
+      isRestoreStack: $isRestoreStack
+      isPushScreen: $isPushScreen
+      currentRoot: $currentRoot
     ) @client {
-      side
-      left
-      center
-      right
-      currentTabIndex
-      isPush
-      isPop
-      isResetStack
-      isResetNavigator
+      mode
+      isPopScreen
+      isResetRoot
+      isRestoreStack
+      isPushScreen
+      currentRoot
     }
   }
 `;

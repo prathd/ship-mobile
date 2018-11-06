@@ -35,24 +35,7 @@ export class Login extends Component {
   };
 
   pushNextScreen = () => {
-    this.props.push({
-      component: {
-        name: SCREENS.PHONE,
-        options: {
-          topBar: {
-            visible: false,
-          },
-          animations: {
-            push: {
-              enable: false,
-            },
-            pop: {
-              enable: false,
-            },
-          },
-        },
-      },
-    });
+    this.props.push(SCREENS.PHONE);
   };
 }
 

@@ -50,24 +50,7 @@ export class EnterBirthday extends Component {
       variables: { birthday: this.state.birthday },
     });
 
-    return this.props.push({
-      component: {
-        name: SCREENS.CREATE_ACCOUNT,
-        options: {
-          topBar: {
-            visible: false,
-          },
-          animations: {
-            push: {
-              enable: false,
-            },
-            pop: {
-              enable: false,
-            },
-          },
-        },
-      },
-    });
+    return this.props.push(SCREENS.CREATE_ACCOUNT);
   };
 }
 

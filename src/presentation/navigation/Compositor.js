@@ -7,6 +7,8 @@ import {
   NAVIGATION_QUERY,
   NAVIGATION_UPDATE,
 } from '../../data/graphql/Navigation.graphql';
+import { SCREENS } from '../../data/screens';
+import { defaultState, sideMenuRoot } from '../../defaults/defaultState';
 
 class Compositor extends Component {
   constructor(props) {
@@ -29,84 +31,35 @@ class Compositor extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // only accept prop changes from currently visible component
+    const {
+      isPopScreen,
+      isResetRoot,
+      isRestoreStack,
+      isPushScreen,
+      currentRoot,
+    } = nextProps.Navigation;
+
     if (nextState.isVisible) {
-      // show/hide side menu if nextProps.side differs
-      if (nextProps.Navigation.side !== this.props.Navigation.side) {
-        if (nextProps.Navigation.side === 'center') {
-          Navigation.mergeOptions(nextProps.componentId, {
-            sideMenu: {
-              [nextProps.Navigation.side]: { visible: false },
-            },
-          });
-        }
-
-        Navigation.mergeOptions(nextProps.componentId, {
-          sideMenu: {
-            [nextProps.Navigation.side]: { visible: true },
-          },
-        });
+      // pop if isPopScreen is true
+      if (isPopScreen) {
+        Navigation.pop(this.props.componentId);
+        this.props.updateNavigation({ variables: { isPopScreen: false } });
       }
 
-      // check if center tabs are being toggled
-      if (
-        nextProps.Navigation.currentTabIndex !==
-        this.props.Navigation.currentTabIndex
-      ) {
-        Navigation.mergeOptions('center', {
-          bottomTabs: {
-            currentTabIndex: nextProps.Navigation.currentTabIndex,
-          },
-        });
+      // push if isPushScreen is true
+      if (isPushScreen) {
+        const { children } = currentRoot.stack;
+        Navigation.push(this.props.componentId, children[children.length - 1]);
+        this.props.updateNavigation({ variables: { isPushScreen: false } });
       }
 
-      // check if screen is to be pushed
-      if (nextProps.Navigation.isPush) {
-        const { children } = nextProps.Navigation.center.bottomTabs.children[
-          nextProps.Navigation.currentTabIndex
-        ].stack;
-        Navigation.push(nextProps.componentId, children[children.length - 1]);
-        return this.props.updateNavigation({
-          variables: { isPush: false },
-        });
+      // reset root if isResetRoot
+      if (isResetRoot) {
+        Navigation.setRoot({ root: currentRoot });
+        this.props.updateNavigation({ variables: { isResetRoot: false } });
       }
 
-      // check if resetting
-      if (nextProps.Navigation.isResetStack) {
-        const { children } = nextProps.Navigation.center.bottomTabs.children[
-          nextProps.Navigation.currentTabIndex
-        ].stack;
-        Navigation.setStackRoot(nextProps.componentId, children[0]);
-        return this.props.updateNavigation({
-          variables: { isResetStack: false },
-        });
-      }
-
-      // reset entire navigator (center)
-      if (nextProps.Navigation.isResetNavigator) {
-        const { left, center, right } = nextProps.Navigation;
-        Navigation.setRoot({
-          root: {
-            sideMenu: {
-              left,
-              center,
-              right,
-            },
-          },
-        });
-
-        this.props.updateNavigation({
-          variables: { isResetNavigator: false },
-        });
-      }
-
-      // check if screen is to be popped
-      if (nextProps.Navigation.isPop) {
-        Navigation.pop(nextProps.componentId);
-        return this.props.updateNavigation({
-          variables: { isPop: false },
-        });
-      }
+      return true;
     }
 
     return false;
@@ -119,71 +72,89 @@ class Compositor extends Component {
   renderChildren = () => {
     return React.Children.map(this.props.children, child => {
       return React.cloneElement(child, {
-        side: this.props.Navigation.side,
-        showSide: side => this.setVisibleSide(side),
-        hideSide: () => this.setVisibleSide('center'),
-        toggleActiveTab: () => this.toggleActiveTab(),
+        push: (screen, options = {}) => this.push(screen, options),
         pop: () => this.pop(),
-        push: screen => this.navigate(screen, false),
-        resetStack: screen => this.navigate(screen, true),
-        resetNavigator: bottomTabs => this.resetNavigator(bottomTabs),
+        resetStack: (mode = 0) => this.resetStack(mode),
       });
     });
   };
 
-  setVisibleSide = side => {
-    return this.props.updateNavigation({
-      variables: { side },
+  push = (screen, options) => {
+    const { currentRoot } = this.props.Navigation;
+    currentRoot.stack.children.push({
+      component: {
+        name: screen,
+        options: {
+          topBar: {
+            visible: false,
+            drawBehind: true,
+            animate: false,
+          },
+          animations: {
+            push: {
+              enable: false,
+            },
+            pop: {
+              enable: false,
+            },
+          },
+          ...options,
+        },
+      },
+    });
+
+    this.props.updateNavigation({
+      variables: {
+        currentRoot: JSON.stringify(currentRoot),
+        isPushScreen: true,
+      },
     });
   };
 
   pop = () => {
-    const { center, currentTabIndex } = this.props.Navigation;
-    center.bottomTabs.children[currentTabIndex].pop();
-
-    return this.props.updateNavigation({
+    const { currentRoot } = this.props.Navigation;
+    currentRoot.stack.children.pop();
+    this.props.updateNavigation({
       variables: {
-        center: JSON.stringify(center),
-        isPop: true,
+        isPopScreen: true,
+        currentRoot: JSON.stringify(currentRoot),
       },
     });
   };
 
-  navigate = (screen, isResetStack) => {
-    const { center, currentTabIndex } = this.props.Navigation;
-    if (isResetStack) {
-      center.bottomTabs.children[currentTabIndex].stack.children = [];
+  resetStack = (mode) => {
+    // LOGIN/SIGNUP
+    if (mode === 0) {
+      this.props.updateNavigation({
+        variables: {
+          mode,
+          isResetRoot: true,
+          currentRoot: defaultState.Navigation.currentRoot,
+        }
+      });
     }
 
-    center.bottomTabs.children[currentTabIndex].stack.children.push(screen);
+    // DASHBOARD
+    if (mode === 1) {
+      this.props.updateNavigation({
+        variables: {
+          mode,
+          isResetRoot: true,
+          currentRoot: JSON.stringify(sideMenuRoot(SCREENS.DASHBOARD)),
+        }
+      });
+    }
 
-    return this.props.updateNavigation({
-      variables: {
-        center: JSON.stringify(center),
-        isResetStack,
-        isPush: !isResetStack,
-      },
-    });
-  };
-
-  resetNavigator = bottomTabs => {
-    const { center } = this.props.Navigation;
-    center.bottomTabs = bottomTabs;
-
-    return this.props.updateNavigation({
-      variables: {
-        center: JSON.stringify(center),
-        isResetNavigator: true,
-      },
-    });
-  };
-
-  toggleActiveTab = () => {
-    return this.props.updateNavigation({
-      variables: {
-        currentTabIndex: this.props.Navigation.currentTabIndex ? 0 : 1,
-      },
-    });
+    // MESSAGE CENTER
+    if (mode === 2) {
+      this.props.updateNavigation({
+        variables: {
+          mode,
+          isResetRoot: true,
+          currentRoot: JSON.stringify(sideMenuRoot(SCREENS.MESSAGE_CENTER)),
+        }
+      });
+    }
   };
 }
 
@@ -192,9 +163,7 @@ export default compose(
     props: ({ data: { Navigation } }) => ({
       Navigation: {
         ...Navigation,
-        left: Navigation.left && JSON.parse(Navigation.left),
-        center: JSON.parse(Navigation.center),
-        right: Navigation.right && JSON.parse(Navigation.right),
+        currentRoot: JSON.parse(Navigation.currentRoot),
       },
     }),
   }),
