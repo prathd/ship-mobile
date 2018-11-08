@@ -96,8 +96,8 @@ class Compositor extends Component {
         push: (screen, options = {}) => this.push(screen, options),
         pop: () => this.pop(),
         resetStack: (mode = 0) => this.resetStack(mode),
-        showSide: side => this.showSide(side),
-        hideSide: () => this.showSide('center'),
+        showSide: side => this.setSide(side),
+        hideSide: () => this.setSide('center'),
       });
     });
   };
@@ -145,11 +145,9 @@ class Compositor extends Component {
     });
   };
 
-  showSide = side => {
+  setSide = side => {
     this.props.updateNavigation({
-      variables: {
-        side,
-      },
+      variables: { side },
     });
   };
 
