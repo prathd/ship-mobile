@@ -23,7 +23,7 @@ class Compositor extends Component {
 
   // Keeps track of the currently visible screen
   componentDidAppear() {
-    this.setState({ isVisible: true });
+    if (this.props.Navigation.side === 'center') this.setState({ isVisible: true });
   }
 
   componentDidDisappear() {
@@ -32,6 +32,7 @@ class Compositor extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     const {
+      side,
       isPopScreen,
       isResetRoot,
       isRestoreStack,
@@ -53,10 +54,30 @@ class Compositor extends Component {
         this.props.updateNavigation({ variables: { isPushScreen: false } });
       }
 
+      // open/close drawer (side)
+      if (side !== this.props.Navigation.side) {
+        if (side === 'center') Navigation.mergeOptions(nextProps.componentId, {
+          sideMenu: {
+            [this.props.Navigation.side]: { visible: false },
+          },
+        });
+
+        else Navigation.mergeOptions(nextProps.componentId, {
+          sideMenu: {
+            [side]: { visible: true },
+          },
+        });
+      }
+
       // reset root if isResetRoot
       if (isResetRoot) {
         Navigation.setRoot({ root: currentRoot });
         this.props.updateNavigation({ variables: { isResetRoot: false } });
+      }
+
+      // restore current stack if isRestoreStack
+      if (isRestoreStack) {
+        // TODO
       }
 
       return true;
@@ -75,6 +96,8 @@ class Compositor extends Component {
         push: (screen, options = {}) => this.push(screen, options),
         pop: () => this.pop(),
         resetStack: (mode = 0) => this.resetStack(mode),
+        showSide: side => this.showSide(side),
+        hideSide: () => this.showSide('center'),
       });
     });
   };
@@ -118,6 +141,14 @@ class Compositor extends Component {
       variables: {
         isPopScreen: true,
         currentRoot: JSON.stringify(currentRoot),
+      },
+    });
+  };
+
+  showSide = side => {
+    this.props.updateNavigation({
+      variables: {
+        side,
       },
     });
   };

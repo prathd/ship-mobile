@@ -4,7 +4,7 @@ import settings from '../../../settings';
 
 minilog.enable();
 
-const loggerName = typeof window !== 'undefined' ? 'frontend' : 'backend';
+const loggerName = typeof window !== 'undefined' ? '[Frontend]' : '[Backend]';
 
 const log = minilog(loggerName);
 log.suggest.defaultResult = false;
@@ -18,7 +18,7 @@ if (Config.__DEV__ && Config.__SERVER__) {
       typeof arguments[0] === 'string' &&
       arguments[0].match(/^\[(HMR|WDS)\]/)
     ) {
-      console_log('backend ' + arguments[0]);
+      console_log('[Backend] ' + arguments[0]);
     } else {
       console_log.apply(global.console, arguments);
     }

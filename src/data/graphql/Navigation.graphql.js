@@ -6,6 +6,7 @@ export const NAVIGATION_QUERY = gql`
   query ReadNavigation {
     Navigation @client {
       mode
+      side
       isPopScreen
       isResetRoot
       isRestoreStack
@@ -18,6 +19,7 @@ export const NAVIGATION_QUERY = gql`
 export const NAVIGATION_UPDATE = gql`
   mutation updateNavigation(
     $mode: Int
+    $side: String
     $isPopScreen: Boolean
     $isResetRoot: Boolean
     $isRestoreStack: Boolean
@@ -26,6 +28,7 @@ export const NAVIGATION_UPDATE = gql`
   ) {
     updateNavigation (
       mode: $mode
+      side: $side
       isPopScreen: $isPopScreen
       isResetRoot: $isResetRoot
       isRestoreStack: $isRestoreStack
@@ -33,6 +36,7 @@ export const NAVIGATION_UPDATE = gql`
       currentRoot: $currentRoot
     ) @client {
       mode
+      side
       isPopScreen
       isResetRoot
       isRestoreStack

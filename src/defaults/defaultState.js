@@ -4,6 +4,7 @@ export const defaultState = {
   Navigation: {
     __typename: 'Navigation',
     mode: 0, // 0 - Login/Signup (stack) | 1 - Dashboard/Message Center (sideMenu)
+    side: 'center',
     isPopScreen: false,
     isResetRoot: false,
     isRestoreStack: false,

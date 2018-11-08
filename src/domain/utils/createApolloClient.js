@@ -11,15 +11,20 @@ import { onError } from 'apollo-link-error';
 import Config from 'react-native-config';
 
 import { Mutation } from '../../data/mutations';
-import { defaultState } from '../../defaults/defaultState';
+import { defaultState, sideMenuRoot } from '../../defaults/defaultState';
 import settings from '../../../settings';
 import log from './log';
+import { SCREENS } from '../../data/screens';
 import { NAVIGATION_QUERY } from '../../data/graphql/Navigation.graphql';
 
 const SCHEMA_VERSION = '1';
 const SCHEMA_VERSION_KEY = 'apollo-schema-version';
 
 const createApolloClient = async ({ apiUrl }) => {
+  // modify defaults if token exists
+  const token = await AsyncStorage.getItem('token');
+  if (token) defaultState.Navigation.currentRoot = JSON.stringify(sideMenuRoot(SCREENS.DASHBOARD));
+
   const cache = new InMemoryCache();
   const persistor = new CachePersistor({
     cache,
@@ -48,7 +53,6 @@ const createApolloClient = async ({ apiUrl }) => {
     if (currentVersion === SCHEMA_VERSION) {
       // If the current version matches the latest version,
       // we're good to go and can restore the cache.
-      await persistor.purge(); // TODO REMOVE WHEN NOT DEBUGGING (fix error with fetchPolicy)
       await persistor.restore();
     } else {
       // Otherwise, we'll want to purge the outdated persisted cache
@@ -120,6 +124,7 @@ const createApolloClient = async ({ apiUrl }) => {
 
   // query navigation state from client to properly restore from cache
   const navigationState = (await client.query({ query: NAVIGATION_QUERY })).data.Navigation;
+  console.log('Navigation State Fetched from Cache', JSON.parse(navigationState.currentRoot));
   return { client, navigationState };
 };
 
