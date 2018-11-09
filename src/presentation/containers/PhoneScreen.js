@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, AsyncStorage } from 'react-native';
 import { compose, graphql } from 'react-apollo';
 
-import theme from '../theme.style';
 import { SCREENS } from '../../data/screens';
 import { LOGIN_WITH_PHONE_NUMBER } from '../../data/graphql/Auth.graphql';
 import {
@@ -38,9 +36,8 @@ export class Phone extends Component {
           country={this.state.country}
           phone={this.state.phone}
         />
-        <TouchableOpacity onPress={this.pushNextScreen}>
-          <CircleNextButton />
-        </TouchableOpacity>
+
+        <CircleNextButton onPress={this.pushNextScreen} />
       </SignupInput>
     );
   }

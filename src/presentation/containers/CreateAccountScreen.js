@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
 import { compose, graphql, withApollo } from 'react-apollo';
 import { AsyncStorage } from 'react-native';
 
@@ -10,6 +9,7 @@ import { SIGNUP } from '../../data/graphql/Auth.graphql';
 import SignupInput from '../components/blocks/SignupInput';
 import EnterAccountInformation from '../components/blocks/EnterAccountInformation';
 import CreateAccountButton from '../components/blocks/CreateAccountButton';
+import Touchable from '../components/elements/Touchable';
 
 export class CreateAccount extends Component {
   constructor(props) {
@@ -31,9 +31,9 @@ export class CreateAccount extends Component {
           password={this.state.password}
           agreeTOC={this.state.agreeTOC}
         />
-        <TouchableOpacity onPress={this.pushNextScreen}>
+        <Touchable onPress={this.pushNextScreen}>
           <CreateAccountButton buttonText={`Create Account`} />
-        </TouchableOpacity>
+        </Touchable>
       </SignupInput>
     );
   }

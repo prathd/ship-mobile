@@ -19,10 +19,10 @@ export const defaultState = {
           },
           animations: {
             push: {
-              enable: false,
+              enabled: false,
             },
             pop: {
-              enable: false,
+              enabled: false,
             },
           },
         },
@@ -62,10 +62,10 @@ export const sideMenuRoot = screen => ({
           },
           animations: {
             push: {
-              enable: false,
+              enabled: false,
             },
             pop: {
-              enable: false,
+              enabled: false,
             },
           },
         },

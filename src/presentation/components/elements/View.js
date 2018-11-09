@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { applyStyleModifiers } from 'styled-components-modifiers';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { moderateScale } from '../../scale.utils';
 
 const MODIFIER_CONFIG = {
   flex: props => `
@@ -18,6 +19,15 @@ const MODIFIER_CONFIG = {
   `,
   fullWidth: props => `
     width: ${wp('100%')};
+  `,
+  circle: props => `
+    border-radius: ${moderateScale(props.radius)};
+  `,
+  width: props => `
+    width: ${moderateScale(props.width)};
+  `,
+  height: props => `
+    height: ${moderateScale(props.height)};
   `,
 };
 

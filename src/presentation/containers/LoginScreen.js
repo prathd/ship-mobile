@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
 
 import { SCREENS } from '../../data/screens';
 
 import LoginButtons from '../components/blocks/LoginButtons';
 import GradientView from '../components/elements/GradientView';
 import Text from '../components/elements/Text';
+import Touchable from '../components/elements/Touchable';
 
 export class Login extends Component {
   render() {
@@ -13,18 +13,18 @@ export class Login extends Component {
       <GradientView flex={1} modifiers={['flex', 'center']}>
         <Text modifiers={['black', 'lg', 'white']}>Welcome to Ship</Text>
         <LoginButtons>
-          <TouchableOpacity onPress={this.loginWithFacebook}>
+          <Touchable onPress={this.loginWithFacebook}>
             <LoginButtons.OpaqueButton>
               <Text modifiers={['black', 'xs', 'light_purple']}>
                 CONTINUE WITH FACEBOOK
               </Text>
             </LoginButtons.OpaqueButton>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.pushNextScreen}>
+          </Touchable>
+          <Touchable onPress={this.pushNextScreen}>
             <LoginButtons.TransparentButton>
               <Text modifiers={['black', 'xs', 'white']}>USE PHONE NUMBER</Text>
             </LoginButtons.TransparentButton>
-          </TouchableOpacity>
+          </Touchable>
         </LoginButtons>
       </GradientView>
     );
@@ -35,6 +35,7 @@ export class Login extends Component {
   };
 
   pushNextScreen = () => {
+
     this.props.push(SCREENS.PHONE);
   };
 }

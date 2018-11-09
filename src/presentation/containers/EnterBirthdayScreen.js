@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
 import { compose, graphql } from 'react-apollo';
 
 import { SCREENS } from '../../data/screens';
@@ -11,6 +10,7 @@ import {
 import SignupInput from '../components/blocks/SignupInput';
 import BirthdayTextInput from '../components/blocks/BirthdayTextInput';
 import CircleNextButton from '../components/elements/CircleNextButton';
+import Touchable from '../components/elements/Touchable';
 
 export class EnterBirthday extends Component {
   constructor(props) {
@@ -30,9 +30,9 @@ export class EnterBirthday extends Component {
           onChange={this.onChange}
           birthday={this.state.birthday}
         />
-        <TouchableOpacity onPress={this.pushNextScreen}>
+        <Touchable onPress={this.pushNextScreen}>
           <CircleNextButton />
-        </TouchableOpacity>
+        </Touchable>
       </SignupInput>
     );
   }

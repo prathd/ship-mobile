@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
 import { compose, graphql } from 'react-apollo';
 
 import {
@@ -11,6 +10,7 @@ import { SCREENS } from '../../data/screens';
 import SignupInput from '../components/blocks/SignupInput';
 import NameTextInput from '../components/blocks/NameTextInput';
 import CircleNextButton from '../components/elements/CircleNextButton';
+import Touchable from '../components/elements/Touchable';
 
 export class EnterName extends Component {
   constructor(props) {
@@ -25,9 +25,9 @@ export class EnterName extends Component {
     return (
       <SignupInput back={this.popScreen} prompt={`What's your name?`}>
         <NameTextInput onChange={this.onChange} name={this.state.name} />
-        <TouchableOpacity onPress={this.pushNextScreen}>
+        <Touchable onPress={this.pushNextScreen}>
           <CircleNextButton />
-        </TouchableOpacity>
+        </Touchable>
       </SignupInput>
     );
   }
