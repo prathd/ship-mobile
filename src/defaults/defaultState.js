@@ -1,4 +1,4 @@
-import { SCREENS } from "../data/screens";
+import { SCREENS } from '../data/screens';
 
 export const defaultState = {
   Navigation: {

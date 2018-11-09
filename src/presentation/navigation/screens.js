@@ -19,7 +19,9 @@ import { MessageCenterScreen } from '../containers/MessageCenterScreen';
 
 export const registerScreens = async () => {
   const apiUrl = Config.__API_URL__;
-  const { client, navigationState } = await Utils.createApolloClient({ apiUrl });
+  const { client, navigationState } = await Utils.createApolloClient({
+    apiUrl,
+  });
 
   Utils.log.info(`Connecting to GraphQL backend at: ${apiUrl}`);
 

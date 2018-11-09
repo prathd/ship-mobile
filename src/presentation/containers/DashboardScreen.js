@@ -26,7 +26,7 @@ export class Dashboard extends Component {
   logout = async () => {
     await AsyncStorage.removeItem('token');
     this.props.resetStack(0);
-  }
+  };
 }
 
 export const DashboardScreen = compose(

@@ -23,7 +23,8 @@ class Compositor extends Component {
 
   // Keeps track of the currently visible screen
   componentDidAppear() {
-    if (this.props.Navigation.side === 'center') this.setState({ isVisible: true });
+    if (this.props.Navigation.side === 'center')
+      this.setState({ isVisible: true });
   }
 
   componentDidDisappear() {
@@ -56,17 +57,18 @@ class Compositor extends Component {
 
       // open/close drawer (side)
       if (side !== this.props.Navigation.side) {
-        if (side === 'center') Navigation.mergeOptions(nextProps.componentId, {
-          sideMenu: {
-            [this.props.Navigation.side]: { visible: false },
-          },
-        });
-
-        else Navigation.mergeOptions(nextProps.componentId, {
-          sideMenu: {
-            [side]: { visible: true },
-          },
-        });
+        if (side === 'center')
+          Navigation.mergeOptions(nextProps.componentId, {
+            sideMenu: {
+              [this.props.Navigation.side]: { visible: false },
+            },
+          });
+        else
+          Navigation.mergeOptions(nextProps.componentId, {
+            sideMenu: {
+              [side]: { visible: true },
+            },
+          });
       }
 
       // reset root if isResetRoot
@@ -151,7 +153,7 @@ class Compositor extends Component {
     });
   };
 
-  resetStack = (mode) => {
+  resetStack = mode => {
     // LOGIN/SIGNUP
     if (mode === 0) {
       return this.props.updateNavigation({
@@ -160,7 +162,7 @@ class Compositor extends Component {
           side: 'center',
           isResetRoot: true,
           currentRoot: defaultState.Navigation.currentRoot,
-        }
+        },
       });
     }
 
@@ -172,7 +174,7 @@ class Compositor extends Component {
           side: 'center',
           isResetRoot: true,
           currentRoot: JSON.stringify(sideMenuRoot(SCREENS.DASHBOARD)),
-        }
+        },
       });
     }
 
@@ -184,7 +186,7 @@ class Compositor extends Component {
           side: 'center',
           isResetRoot: true,
           currentRoot: JSON.stringify(sideMenuRoot(SCREENS.MESSAGE_CENTER)),
-        }
+        },
       });
     }
   };

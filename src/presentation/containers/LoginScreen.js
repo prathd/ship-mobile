@@ -35,7 +35,6 @@ export class Login extends Component {
   };
 
   pushNextScreen = () => {
-
     this.props.push(SCREENS.PHONE);
   };
 }

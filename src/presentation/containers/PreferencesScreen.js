@@ -7,9 +7,7 @@ export class Preferences extends Component {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>This is the Preferences Screen!</Text>
         <TouchableOpacity onPress={() => this.props.hideSide()}>
-          <Text>
-            Close
-          </Text>
+          <Text>Close</Text>
         </TouchableOpacity>
       </View>
     );

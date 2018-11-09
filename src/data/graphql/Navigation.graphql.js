@@ -26,7 +26,7 @@ export const NAVIGATION_UPDATE = gql`
     $isPushScreen: Boolean
     $currentRoot: String
   ) {
-    updateNavigation (
+    updateNavigation(
       mode: $mode
       side: $side
       isPopScreen: $isPopScreen

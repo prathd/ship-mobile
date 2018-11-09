@@ -23,7 +23,10 @@ const SCHEMA_VERSION_KEY = 'apollo-schema-version';
 const createApolloClient = async ({ apiUrl }) => {
   // modify defaults if token exists
   const token = await AsyncStorage.getItem('token');
-  if (token) defaultState.Navigation.currentRoot = JSON.stringify(sideMenuRoot(SCREENS.DASHBOARD));
+  if (token)
+    defaultState.Navigation.currentRoot = JSON.stringify(
+      sideMenuRoot(SCREENS.DASHBOARD),
+    );
 
   const cache = new InMemoryCache();
   const persistor = new CachePersistor({
@@ -123,7 +126,8 @@ const createApolloClient = async ({ apiUrl }) => {
   client.onResetStore(cache.writeDefaults);
 
   // query navigation state from client to properly restore from cache
-  const navigationState = (await client.query({ query: NAVIGATION_QUERY })).data.Navigation;
+  const navigationState = (await client.query({ query: NAVIGATION_QUERY })).data
+    .Navigation;
   return { client, navigationState };
 };
 

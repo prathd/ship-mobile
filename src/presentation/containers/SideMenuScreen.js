@@ -8,14 +8,10 @@ export class SideMenu extends Component {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>This is the SideMenu!</Text>
         <TouchableOpacity onPress={this.logout}>
-          <Text>
-            Logout
-          </Text>
+          <Text>Logout</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => this.props.hideSide()}>
-          <Text>
-            Close
-          </Text>
+          <Text>Close</Text>
         </TouchableOpacity>
       </View>
     );
@@ -24,9 +20,7 @@ export class SideMenu extends Component {
   logout = async () => {
     await AsyncStorage.removeItem('token');
     this.props.resetStack(0);
-  }
+  };
 }
 
-export const SideMenuScreen = compose(
-  withApollo,
-)(SideMenu);
+export const SideMenuScreen = compose(withApollo)(SideMenu);
