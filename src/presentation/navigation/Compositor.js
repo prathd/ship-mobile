@@ -115,10 +115,10 @@ class Compositor extends Component {
           },
           animations: {
             push: {
-              enable: false,
+              enabled: false,
             },
             pop: {
-              enable: false,
+              enabled: false,
             },
           },
           ...options,
@@ -154,9 +154,10 @@ class Compositor extends Component {
   resetStack = (mode) => {
     // LOGIN/SIGNUP
     if (mode === 0) {
-      this.props.updateNavigation({
+      return this.props.updateNavigation({
         variables: {
           mode,
+          side: 'center',
           isResetRoot: true,
           currentRoot: defaultState.Navigation.currentRoot,
         }
@@ -165,9 +166,10 @@ class Compositor extends Component {
 
     // DASHBOARD
     if (mode === 1) {
-      this.props.updateNavigation({
+      return this.props.updateNavigation({
         variables: {
           mode,
+          side: 'center',
           isResetRoot: true,
           currentRoot: JSON.stringify(sideMenuRoot(SCREENS.DASHBOARD)),
         }
@@ -176,9 +178,10 @@ class Compositor extends Component {
 
     // MESSAGE CENTER
     if (mode === 2) {
-      this.props.updateNavigation({
+      return this.props.updateNavigation({
         variables: {
           mode,
+          side: 'center',
           isResetRoot: true,
           currentRoot: JSON.stringify(sideMenuRoot(SCREENS.MESSAGE_CENTER)),
         }

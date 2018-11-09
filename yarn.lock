@@ -3582,7 +3582,14 @@ has@^1.0.1, has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
-hoist-non-react-statics@2.x.x, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
+hoist-non-react-statics@3.x.x:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.1.0.tgz#42414ccdfff019cd2168168be998c7b3bd5245c0"
+  integrity sha512-MYcYuROh7SBM69xHGqXEwQqDux34s9tz+sCnxJmN18kgWh6JFdTw/5YdZtqsOdZJXddE/wUpCzfEdDrJj8p0Iw==
+  dependencies:
+    react-is "^16.3.2"
+
+hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
@@ -6248,15 +6255,16 @@ react-native-masked-text@^1.9.1:
     moment "2.19.3"
     tinymask "^1.0.2"
 
-react-native-navigation@2.0.2452:
-  version "2.0.2452"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-2.0.2452.tgz#67a4b97c9a5b038f926411b95e8224afe57f6d2f"
-  integrity sha512-90RX7OLVxI7i0+tNKipkV/CdyS2sy4vpznsnpDQwlv+pZCs+cz7/HYXYF20qsbYYjDhJRm1kmoqWFHNx6Cmh/w==
+react-native-navigation@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-2.1.2.tgz#225698d7b39dd114a01ef0a301cca18af260316b"
+  integrity sha512-FmV0tekaWLN3m3TCsEnFVpuy/Zpng9KiFIVXFRgFcxidyvtWxrz2YgMQ/GidlJS17yF2eL7Al27mYLUJpDX6Ow==
   dependencies:
-    hoist-non-react-statics "2.x.x"
+    hoist-non-react-statics "3.x.x"
     lodash "4.x.x"
     prop-types "15.x.x"
     react-lifecycles-compat "2.0.0"
+    tslib "1.9.3"
 
 react-native-responsive-screen@^1.1.9:
   version "1.1.9"
@@ -6269,11 +6277,6 @@ react-native-safe-area-view@^0.11.0:
   integrity sha512-N3nElaahu1Me2ltnfc9acpgt1znm6pi8DSadKy79kvdzKwvVIzw0IXueA/Hjr51eCW1BsfNw7D1SgBT9U6qEkA==
   dependencies:
     hoist-non-react-statics "^2.3.1"
-
-react-native-splash-screen@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.1.1.tgz#1a4e46c9fdce53ff52af2a2cb4181788c4e30b30"
-  integrity sha512-PU2YocOSGbLjL9Vgcq/cwMNuHHKNjjuPpa1IPMuWo+6EB/fSZ5VOmxSa7+eucQe3631s3NhGuk3eHKahU03a4Q==
 
 react-native-svg@^7.0.3:
   version "7.0.3"
@@ -7472,7 +7475,7 @@ trim-right@^1.0.1:
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
   integrity sha1-yy4SAwZ+DI3h9hQJS5/kVwTqYAM=
 
-tslib@^1.9.0:
+tslib@1.9.3, tslib@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==

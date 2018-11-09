@@ -124,7 +124,6 @@ const createApolloClient = async ({ apiUrl }) => {
 
   // query navigation state from client to properly restore from cache
   const navigationState = (await client.query({ query: NAVIGATION_QUERY })).data.Navigation;
-  console.log('Navigation State Fetched from Cache', JSON.parse(navigationState.currentRoot));
   return { client, navigationState };
 };
 
