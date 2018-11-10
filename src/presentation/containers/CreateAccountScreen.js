@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { compose, graphql, withApollo } from 'react-apollo';
 import { AsyncStorage } from 'react-native';
 
-import { SCREENS } from '../../data/screens';
 import { QUERY_USER_STATE } from '../../data/graphql/User.graphql';
 import { SIGNUP } from '../../data/graphql/Auth.graphql';
 

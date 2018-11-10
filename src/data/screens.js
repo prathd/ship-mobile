@@ -11,4 +11,5 @@ export const SCREENS = {
   SIDE_MENU: `navigation.app.SideMenuScreen`,
   PREFERENCES: `navigation.app.PreferencesScreen`,
   MESSAGE_CENTER: `navigation.app.MessageCenterScreen`,
+  ONBOARDING: `navigation.app.OnboardingScreen`,
 };
