@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
 import { compose, graphql } from 'react-apollo';
 
-import theme from '../theme.style';
 import { SCREENS } from '../../data/screens';
 import { VERIIFY_PHONE_NUMBER } from '../../data/graphql/Auth.graphql';
 import { QUERY_USER_STATE } from '../../data/graphql/User.graphql';
@@ -11,6 +9,7 @@ import SignupInput from '../components/blocks/SignupInput';
 import VerifyCode from '../components/blocks/VerifyCode';
 import Text from '../components/elements/Text';
 import CircleNextButton from '../components/elements/CircleNextButton';
+import Touchable from '../components/elements/Touchable';
 
 export class PhoneConfirm extends Component {
   constructor(props) {
@@ -28,14 +27,12 @@ export class PhoneConfirm extends Component {
         prompt={`Enter the 6 digit code${'\n'}sent to your device`}
       >
         <VerifyCode onChange={this.onChange} code={this.state.code} />
-        <TouchableOpacity onPress={this.pushNextScreen}>
-          <CircleNextButton />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.resendCode}>
+        <CircleNextButton onPress={this.pushNextScreen} />
+        <Touchable onPress={this.resendCode}>
           <Text
             modifiers={['heavy', 'xs', 'purple', 'vMargin10']}
           >{`Didn't get a text?`}</Text>
-        </TouchableOpacity>
+        </Touchable>
       </SignupInput>
     );
   }

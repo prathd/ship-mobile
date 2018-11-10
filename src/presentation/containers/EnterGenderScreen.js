@@ -11,18 +11,18 @@ import SignupInput from '../components/blocks/SignupInput';
 import NameTextInput from '../components/blocks/NameTextInput';
 import CircleNextButton from '../components/elements/CircleNextButton';
 
-export class EnterName extends Component {
+export class EnterGender extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      name: this.props.UserState.name || '',
+      gender: this.props.UserState.gender || '',
     };
   }
 
   render() {
     return (
-      <SignupInput back={this.popScreen} prompt={`What's your name?`}>
+      <SignupInput back={this.popScreen} prompt={`I am`}>
         <NameTextInput onChange={this.onChange} name={this.state.name} />
         <CircleNextButton onPress={this.pushNextScreen} />
       </SignupInput>
@@ -39,18 +39,18 @@ export class EnterName extends Component {
 
   pushNextScreen = async () => {
     await this.props.updateUserState({
-      variables: { name: this.state.name },
+      variables: { gender: this.state.gender },
     });
 
-    return this.props.push(SCREENS.ENTER_BIRTHDAY);
+    return this.props.push(SCREENS.CREATE_ACCOUNT);
   };
 }
 
-export const EnterNameScreen = compose(
+export const EnterGenderScreen = compose(
   graphql(QUERY_USER_STATE, {
     props: ({ data: { UserState } }) => ({
       UserState,
     }),
   }),
   graphql(UPDATE_USER_STATE, { name: 'updateUserState' }),
-)(EnterName);
+)(EnterGender);

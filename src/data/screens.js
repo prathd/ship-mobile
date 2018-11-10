@@ -4,6 +4,7 @@ export const SCREENS = {
   PHONE_CONFIRM: `navigation.app.PhoneConfirmScreen`,
   ENTER_NAME: `navigation.app.EnterNameScreen`,
   ENTER_BIRTHDAY: `navigation.app.EnterBirthdayScreen`,
+  ENTER_GENDER: `navigation.app.EnterGenderScreen`,
   CREATE_ACCOUNT: `navigation.app.CreateAccountScreen`,
   ENTER_PASSWORD: `navigation.app.EnterPasswordScreen`,
   DASHBOARD: `navigation.app.DashboardScreen`,

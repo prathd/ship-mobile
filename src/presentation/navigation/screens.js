@@ -12,6 +12,7 @@ import { EnterNameScreen } from '../containers/EnterNameScreen';
 import { EnterBirthdayScreen } from '../containers/EnterBirthdayScreen';
 import { CreateAccountScreen } from '../containers/CreateAccountScreen';
 import { EnterPasswordScreen } from '../containers/EnterPasswordScreen';
+import { EnterGenderScreen } from '../containers/EnterGenderScreen';
 import { DashboardScreen } from '../containers/DashboardScreen';
 import { SideMenuScreen } from '../containers/SideMenuScreen';
 import { PreferencesScreen } from '../containers/PreferencesScreen';
@@ -68,6 +69,11 @@ export const registerScreens = async () => {
   Navigation.registerComponent(
     SCREENS.PREFERENCES,
     decorateWithProvider(PreferencesScreen, client),
+  );
+
+  Navigation.registerComponent(
+    SCREENS.ENTER_GENDER,
+    decorateWithProvider(EnterGenderScreen, client),
   );
 
   Navigation.registerComponent(

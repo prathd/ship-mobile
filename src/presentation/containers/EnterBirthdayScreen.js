@@ -10,7 +10,6 @@ import {
 import SignupInput from '../components/blocks/SignupInput';
 import BirthdayTextInput from '../components/blocks/BirthdayTextInput';
 import CircleNextButton from '../components/elements/CircleNextButton';
-import Touchable from '../components/elements/Touchable';
 
 export class EnterBirthday extends Component {
   constructor(props) {
@@ -30,9 +29,7 @@ export class EnterBirthday extends Component {
           onChange={this.onChange}
           birthday={this.state.birthday}
         />
-        <Touchable onPress={this.pushNextScreen}>
-          <CircleNextButton />
-        </Touchable>
+        <CircleNextButton onPress={this.pushNextScreen} />
       </SignupInput>
     );
   }
@@ -50,7 +47,7 @@ export class EnterBirthday extends Component {
       variables: { birthday: this.state.birthday },
     });
 
-    return this.props.push(SCREENS.CREATE_ACCOUNT);
+    return this.props.push(SCREENS.ENTER_GENDER);
   };
 }
 
