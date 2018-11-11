@@ -33,6 +33,7 @@ export const LOGIN = gql`
       token
       user {
         id
+        stage
       }
     }
   }

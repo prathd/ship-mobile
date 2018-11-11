@@ -11,7 +11,7 @@ import { onError } from 'apollo-link-error';
 import Config from 'react-native-config';
 
 import { Mutation } from '../../data/mutations';
-import { defaultState, sideMenuRoot } from '../../defaults/defaultState';
+import { stackRoot, sideMenuRoot, defaultState } from '../../defaults/defaultState';
 import settings from '../../../settings';
 import log from './log';
 import { SCREENS } from '../../data/screens';
@@ -21,12 +21,19 @@ const SCHEMA_VERSION = '1';
 const SCHEMA_VERSION_KEY = 'apollo-schema-version';
 
 const createApolloClient = async ({ apiUrl }) => {
-  // modify defaults if token exists
-  const token = await AsyncStorage.getItem('token');
-  if (token)
-    defaultState.Navigation.currentRoot = JSON.stringify(
-      sideMenuRoot(SCREENS.DASHBOARD),
-    );
+  try {
+    // modify defaults if token exists
+    const [token, stage] = await Promise.all([AsyncStorage.getItem('token'), AsyncStorage.getItem('stage')]);
+
+    if (token) {
+      defaultState.Navigation.currentRoot = JSON.stringify(
+        JSON.parse(stage) ? sideMenuRoot(SCREENS.DASHBOARD) : stackRoot(SCREENS.ONBOARDING),
+      );
+    }
+  } catch (e) {
+    console.log('ERROR', e);
+    throw new Error(e.message);
+  }
 
   const cache = new InMemoryCache();
   const persistor = new CachePersistor({

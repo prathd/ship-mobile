@@ -1,47 +1,29 @@
 import { SCREENS } from '../data/screens';
 
-export const defaultState = {
-  Navigation: {
-    __typename: 'Navigation',
-    mode: 0, // 0 - Login/Signup (stack) | 1 - Dashboard/Message Center (sideMenu)
-    side: 'center',
-    isPopScreen: false,
-    isResetRoot: false,
-    isRestoreStack: false,
-    isPushScreen: false,
-    currentRoot: JSON.stringify({
-      stack: {
-        options: {
-          topBar: {
-            visible: false,
-            drawBehind: true,
-            animate: false,
-          },
-          animations: {
-            push: {
-              enabled: false,
-            },
-            pop: {
-              enabled: false,
-            },
-          },
-        },
-        children: [
-          {
-            component: { name: SCREENS.LOGIN },
-          },
-        ],
+export const stackRoot = screen => ({
+  stack: {
+    options: {
+      topBar: {
+        visible: false,
+        drawBehind: true,
+        animate: false,
       },
-    }),
+      animations: {
+        push: {
+          enabled: false,
+        },
+        pop: {
+          enabled: false,
+        },
+      },
+    },
+    children: [
+      {
+        component: { name: screen },
+      },
+    ],
   },
-  UserState: {
-    __typename: 'UserState',
-    phone: '{}',
-    name: '',
-    birthday: '',
-    gender: 'MALE',
-  },
-};
+});
 
 export const sideMenuRoot = screen => ({
   sideMenu: {
@@ -73,3 +55,23 @@ export const sideMenuRoot = screen => ({
     },
   },
 });
+
+export const defaultState = {
+  Navigation: {
+    __typename: 'Navigation',
+    mode: 0, // 0 - Login/Signup (stack) | 1 - Dashboard/Message Center (sideMenu)
+    side: 'center',
+    isPopScreen: false,
+    isResetRoot: false,
+    isRestoreStack: false,
+    isPushScreen: false,
+    currentRoot: JSON.stringify(stackRoot(SCREENS.LOGIN)),
+  },
+  UserState: {
+    __typename: 'UserState',
+    phone: '{}',
+    name: '',
+    birthday: '',
+    gender: 'MALE',
+  },
+};

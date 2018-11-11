@@ -51,9 +51,8 @@ export class EnterPassword extends Component {
         },
       };
       const auth = await this.props.login(userData);
-
-      await AsyncStorage.setItem('token', auth.data.login.token);
-      this.props.resetStack(1);
+      await Promise.all([AsyncStorage.setItem('token', auth.data.login.token), AsyncStorage.setItem('stage', JSON.stringify(auth.data.login.user.stage))]);
+      this.props.resetStack(auth.data.login.user.stage ? 1 : 3);
     } catch (e) {
       console.log(e);
       alert('Error Logging In.');

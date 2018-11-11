@@ -8,7 +8,7 @@ import {
   NAVIGATION_UPDATE,
 } from '../../data/graphql/Navigation.graphql';
 import { SCREENS } from '../../data/screens';
-import { defaultState, sideMenuRoot } from '../../defaults/defaultState';
+import { stackRoot, sideMenuRoot } from '../../defaults/defaultState';
 
 class Compositor extends Component {
   constructor(props) {
@@ -161,7 +161,7 @@ class Compositor extends Component {
           mode,
           side: 'center',
           isResetRoot: true,
-          currentRoot: defaultState.Navigation.currentRoot,
+          currentRoot: JSON.stringify(stackRoot(SCREENS.LOGIN)),
         },
       });
     }
@@ -186,6 +186,18 @@ class Compositor extends Component {
           side: 'center',
           isResetRoot: true,
           currentRoot: JSON.stringify(sideMenuRoot(SCREENS.MESSAGE_CENTER)),
+        },
+      });
+    }
+
+    // ONBOARDING
+    if (mode === 3) {
+      return this.props.updateNavigation({
+        variables: {
+          mode,
+          side: 'center',
+          isResetRoot: true,
+          currentRoot: JSON.stringify(stackRoot(SCREENS.ONBOARDING)),
         },
       });
     }

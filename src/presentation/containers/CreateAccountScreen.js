@@ -63,8 +63,8 @@ export class CreateAccount extends Component {
     };
     const auth = await this.props.signup(userData);
 
-    await AsyncStorage.setItem('token', auth.data.signup.token);
-    this.props.resetStack(1);
+    await Promise.all([AsyncStorage.setItem('token', auth.data.signup.token), AsyncStorage.setItem('stage', JSON.stringify(auth.data.signup.user.stage))]);
+    this.props.resetStack(3); // redirect to SCREENS.ONBOARDING
   };
 }
 

@@ -1,6 +1,7 @@
 export * from './CreateAccountScreen';
 export * from './DashboardScreen';
 export * from './EnterBirthdayScreen';
+export * from './EnterGenderScreen';
 export * from './EnterNameScreen';
 export * from './EnterPasswordScreen';
 export * from './LoginScreen';
